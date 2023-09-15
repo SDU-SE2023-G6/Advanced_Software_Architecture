@@ -20,6 +20,16 @@
         "kind": "build",
         "isDefault": true
       },
+    },
+    {
+      "label": "Run Docker Compose for LaTeX UNIX",
+      "type": "shell",
+      "command": "./report/latexUtils/compileLatex-UNIX.sh",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
     }
   ]
 }

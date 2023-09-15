@@ -16,5 +16,17 @@
     "Run Docker Compose for LaTeX Reflections": [
       "report/ReflectionsTemplate/*.tex",
     ],
+    "Run Docker Compose for LaTeX UNIX": [
+      "report/GroupTemplate/*.tex",
+      "report/ReflectionsTemplate/*.tex",
+    ]
   },
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.tex$",
+        "cmd": "bash -c report/latexUtils/compileLatex-UNIX-OLD-DC.sh"
+      },
+    ]
+  }
 }
