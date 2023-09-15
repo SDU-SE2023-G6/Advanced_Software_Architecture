@@ -1,0 +1,55 @@
+\documentclass{article}
+
+\title{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Use Cases}
+Name: Introduction of a new bike model \\
+Actors: Assembly technician, production manager, production scheduler \\
+Preconditions: A design of the new bike, specifying the required production steps and what machines are required, exists.
+
+Steps:
+\begin{enumerate}
+\item The production manager logs into the the production software.
+\item The production manager configures a new production step in the software.
+
+\item The production manager asks the assembly technician to add new hardware to the assembly line.
+
+\item The assembly technician installs hardware to the assembly line.
+
+\item The production manager configures a new production run including the new production step in the software.
+
+\item The production manager schedules a test run.
+
+\item The production scheduler confirms the test schedule and starts the production run.
+\item The assembly technician and production manager confirm the correctness of the newly established production run.
+
+
+\end{enumerate}
+
+Postconditions: A new bike resembling a test artifact of the newly established production run. \\
+
+
+Name: Emergency shutdown due to malfunctioning test bench \\
+Actors: Test bench, quality assurance worker \\
+Preconditions: QA Worker performs quality assurance of the produced bike at a test bench. The test bench includes the use of robotic arms for easier inspection of the bike.
+\begin{enumerate}
+    \item The quality assurance worker starts his inspection of the produced bike. Therefore, he uses a test bench that utilizes robotic arms enabling easier inspection of the bike (i.e. the robotic arms help to lift, rotate, etc. the bike).
+    \item While standing very close to the bike, the robotic arms begin to move the bike in unpredictable ways.
+    \item Sensors detect the proximity of the human worker to the malfunctioning machine.
+    \item The security system interprets it as threat to the human worker.
+    \item The security system shuts the malfunctioning test bench down and reports the shutdown to the supervisory system.
+\\
+
+\end{enumerate}
+
+Postconditions: The production machine is shutdown and remaining work is load-balanced to the other machines that are available.
+
+
+
+
+\end{document}
