@@ -24,7 +24,7 @@
     {
       "label": "Run Docker Compose for LaTeX UNIX",
       "type": "shell",
-      "command": "./report/latexUtils/compileLatex-UNIX.sh",
+      "command": "docker compose -f report/docker-compose-latex.yml run latex",
       "problemMatcher": [],
       "group": {
         "kind": "build",
