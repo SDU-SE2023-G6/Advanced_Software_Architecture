@@ -5,20 +5,23 @@ Group reviewing: Group 6
 General:
 + The implications of the examined context result in measures addressing specific Quality Attributes. The reader follows the thought process of the authors easily.
 + The generated information is well incorporated into the report template.
-- The focus seems a bit split between to major systems (production system and software software delivery system). It might make sense to focus on one major system and its subsystems.
-- Spelling errors
+- The focus seems a bit split between two major systems (production system and software software delivery system). It might make sense to focus on one major system and its subsystems.
+- Spelling errors - maybe you could try to use some spell-checking plugin e.g. Grammarly
+- Reorganizing the text into a structure that follows exercise assessment criteria would probably be a good idea and statements would become more clear.
 
 Rubric:
 
 > Description of the domain [Sufficient]
  + The domain is explained in the 'Related Work' chapter. External sources are used for creating the big picture.
- - The assumptions give a good overview over the fictional company. However, the description of the context of the company is lacking a bit of depth. It is for example not clear why the production line needs to run 24/7. Also, it is not clear why the an exchange of a robot should be easy or fast.
+ - The assumptions give a good overview over the fictional company. However, the description of the context of the company is lacking a bit of depth. It is for example not clear why the production line needs to run 24/7. Also, it is not clear why an exchange of a robot should be easy or fast.
  - The reasons for the challenges of Industry 4.0 (e.g. Interoperability, Deployability) are not clear to the reader.
+ - Authors went through multiple academic papers and probably conducted valuable research, but they haven´t stated the reasoning for their conclusions from the papers. When mentioning sources be more descriptive. E.q. don´t only say that this article describes something, but support your conclusion by mentioning a few statements from the article so that readers know why it says so.
+ - Description of domain feels more like a literature review and in the beginning it wasn´t clear what domain have authors chosen. Only after reading the whole article and deducting from use cases, the domain becomes clear. Maybe just reorganizing the text could help.
 
 > Quality of use cases [Good]
  + All use cases are clear. They comprised of atomic steps that the reader can follow easily. The wording (e.g. the names of actors) is consistent. The use cases follow the format provided in the exercise.
  + All use cases are relevant. They have important implications on the system structure. Also, the use cases address different requirements of the system.
- - Use cases miss some context. The reasons for the use cases are missing.
+ - Use cases miss some context. The reasons for the use cases are missing. //not sure if use cases need reasons?
  - Use case 2 is great, but could use some more details. For example, you could specify who is removing or adding robots to the production line. Is it a human worker? Is it a robot?
  - Use case 1 and 4 could emphasize their connection to Industry 4.0 more. For example, you could extend use case 4 to include more contextual information: 'a problem with a set of produced drones, that have been already shipped, has been identified. Luckily, the company knows the IDs of that drones. The software department notifies the affected customers, asking them to install a new update.' After that, you could insert use case 4.
 
