@@ -24,10 +24,13 @@ Rubric:
  - Use cases miss some context. The reasons for the use cases are missing. //not sure if use cases need reasons?
  - Use case 2 is great, but could use some more details. For example, you could specify who is removing or adding robots to the production line. Is it a human worker? Is it a robot?
  - Use case 1 and 4 could emphasize their connection to Industry 4.0 more. For example, you could extend use case 4 to include more contextual information: 'a problem with a set of produced drones, that have been already shipped, has been identified. Luckily, the company knows the IDs of that drones. The software department notifies the affected customers, asking them to install a new update.' After that, you could insert use case 4.
+ - In use case 2 they stated that, they will implement multiple production line from the start in case any fault occurs. which is not ideal for the industry because it will increase the production cost. They could use any sensor that can identify the fault in the production line and indicate that fault level for example: low, mid, high.
+ - There is no clear explaination about faulty product and how the system will identify that faulty product.
 
 > System structure supports use cases [Good]
  + The use cases are supported by the production system and by the software delivery system.
  - The ERP system is identified, but does not support any use case.
+ - The company has a large amount of workers but there is not HRM system introduced.
 
 > Quality of arguments [Sufficient]
  + Conclusions are always listed at the beginning of a paragraph which increases the readability of the argument.
