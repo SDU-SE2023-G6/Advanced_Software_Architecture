@@ -12,3 +12,4 @@ Todo:
 	- Decrease or combine some of the subsystems
 	- Create descriptions for subsystems
 	- Create a component-connector-view or something similar for the systems and subsystems
+ - Add this to the official latex pdf document
