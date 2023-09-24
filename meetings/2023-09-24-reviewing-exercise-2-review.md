@@ -1,6 +1,9 @@
 # 2023-09-24 - Reviewing the review of exercises 2
 Todo:
 - Ask Torben about if the assumptions we made were wrong
+	-  Add intro to assumptions
+ 	-  Add detailed info about the fictional company
+  	-  Consider cutting out the details about the production line
 - Use cases
 	- Rewrite the use case "Failure of one of the robotic arms. (Availability)"
 	- Write a new use case where the production line runs out of parts while on the production line
