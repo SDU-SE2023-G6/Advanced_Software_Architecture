@@ -1,0 +1,39 @@
+Review of Group Exercise 2, 19/09/2023
+Group reviewed: Group 5
+Group reviewing: Group 6
+
+General:
++ The implications of the examined context result in measures addressing specific Quality Attributes. The reader follows the thought process of the authors easily.
++ The generated information is well incorporated into the report template.
+- The focus seems a bit split between two major systems (production system and software software delivery system). It might make sense to focus on one major system and its subsystems.
+- Spelling errors - maybe you could try to use some spell-checking plugin e.g. Grammarly
+- Reorganizing the text into a structure that follows exercise assessment criteria would probably be a good idea and statements would become more clear.
+
+Rubric:
+
+> Description of the domain [Sufficient]
+ + The domain is explained in the 'Related Work' chapter. External sources are used for creating the big picture.
+ - The assumptions give a good overview over the fictional company. However, the description of the context of the company is lacking a bit of depth. It is for example not clear why the production line needs to run 24/7. Also, it is not clear why an exchange of a robot should be easy or fast.
+ - The reasons for the challenges of Industry 4.0 (e.g. Interoperability, Deployability) are not clear to the reader.
+ - Authors went through multiple academic papers and probably conducted valuable research, but they haven´t stated the reasoning for their conclusions from the papers. When mentioning sources be more descriptive. E.q. don´t only say that this article describes something, but support your conclusion by mentioning a few statements from the article so that readers know why it says so.
+ - Description of domain feels more like a literature review and in the beginning it wasn´t clear what domain have authors chosen. Only after reading the whole article and deducting from use cases, the domain becomes clear. Maybe just reorganizing the text could help.
+
+> Quality of use cases [Good]
+ + All use cases are clear. They comprised of atomic steps that the reader can follow easily. The wording (e.g. the names of actors) is consistent. The use cases follow the format provided in the exercise.
+ + All use cases are relevant. They have important implications on the system structure. Also, the use cases address different requirements of the system.
+ - Use cases miss some context. The reasons for the use cases are missing. //not sure if use cases need reasons?
+ - Use case 2 is great, but could use some more details. For example, you could specify who is removing or adding robots to the production line. Is it a human worker? Is it a robot?
+ - Use case 1 and 4 could emphasize their connection to Industry 4.0 more. For example, you could extend use case 4 to include more contextual information: 'a problem with a set of produced drones, that have been already shipped, has been identified. Luckily, the company knows the IDs of that drones. The software department notifies the affected customers, asking them to install a new update.' After that, you could insert use case 4.
+ - In use case 2 they stated that, they will implement multiple production line from the start in case any fault occurs. which is not ideal for the industry because it will increase the production cost. They could use any sensor that can identify the fault in the production line and indicate that fault level for example: low, mid, high.
+ - There is no clear explaination about faulty product and how the system will identify that faulty product.
+
+> System structure supports use cases [Good]
+ + The use cases are supported by the production system and by the software delivery system.
+ - The ERP system is identified, but does not support any use case.
+ - The company has a large amount of workers but there is not HRM system introduced.
+
+> Quality of arguments [Sufficient]
+ + Conclusions are always listed at the beginning of a paragraph which increases the readability of the argument.
+ - Some conclusions are not supported by premises. For example, the production line should run 24/7 and be continuously deployable, but it is not clear why. The same applies to the availability and the deployability of the software delivery system.
+ - The wording in the part about the examined context could be a bit more consistent (e.g. sometimes it says new versions, sometimes new updates). This would allow the reader to follow the text more easily.
+ - The arguments could be unfolded in a more natural way. Sometimes, the text is jumping from one topic to another. Try to use more transitions! For example, find a transition between the part about availability of the production system and the possibility to exchange robots in the production line easily.

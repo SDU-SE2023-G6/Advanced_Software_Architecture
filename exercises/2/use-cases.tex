@@ -1,0 +1,82 @@
+\section{Use Cases}
+\begin{table}[H]
+\caption{Extensibility and flexibility use case}
+\centering
+\begin{tabular}{|l|p{8cm}|} \hline
+Name & Introduction of a new bike model \\ \hline
+Actors & Assembly technician, production manager, production scheduler \\ \hline
+Pre condition & A design of the new bike, specifying the required production  \\ \hline
+Description & \begin{enumerate} 
+\item The production manager logs into the the production software.
+\item The production manager configures a new production step in the software.
+\item The production manager asks the assembly technician to add new hardware to the assembly line.
+\item The assembly technician installs hardware to the assembly line.
+\item The production manager configures a new production run including the new production step in the software.
+\item The production manager schedules a test run.
+\item The production scheduler confirms the test schedule and starts the production run.
+\item The assembly technician and production manager confirm the correctness of the newly established production run.
+\end{enumerate} \\ \hline
+Post condition & A new bike resembling a test artifact of the newly established production run. \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Security use case}
+\begin{tabular}{|l|p{8cm}|} \hline
+Name & Emergency shutdown due to malfunctioning test bench \\ \hline
+Actors & Test bench, quality assurance worker \\ \hline
+Pre condition & QA Worker performs quality assurance of the produced bike at a test bench. The test bench includes the use of robotic arms for easier inspection of the bike.  \\ \hline
+Description & \begin{enumerate} 
+ \item The quality assurance worker starts his inspection of the produced bike. Therefore, he uses a test bench that utilizes robotic arms enabling easier inspection of the bike (i.e. the robotic arms help to lift, rotate, etc. the bike).
+\item While standing very close to the bike, the robotic arms begin to move the bike in unpredictable ways.
+\item Sensors detect the proximity of the human worker to the malfunctioning machine.
+\item The security system interprets it as threat to the human worker.
+\item The security system shuts the malfunctioning test bench down and reports the shutdown to the supervisory system.
+\end{enumerate} \\ \hline
+Post condition & The production machine is shutdown and remaining work is load-balanced to the other machines that are available. \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\caption{Availability use case}
+\centering
+\begin{tabular}{|l|p{8cm}|} \hline
+Name & Failure of one of the robotic arms. \\ \hline
+Actors & Robotic arm, Supervisor system (system) and Production line worker \\ \hline
+Pre condition & Production line is running  \\ \hline
+Description & \begin{enumerate} 
+\item One of the robotic arms suddently starts malfunctioning and not picking up parts.
+\item The system notices that the arm that is malfunctioning is not assembling the parts it needs to assemble.
+\item The system notifies the operator that the arm is malfunctioning.
+\item The system checks if there is another robotic arm that can pickup for the failing robotic arm.
+\item The system finds another robotic arm that can pickup the slack.
+\item The system reconfigures the production to to use the other arm.
+\item The system notifies the operator what it has changed.
+\end{enumerate} \\ \hline
+Post condition & The system keeps runnng with the other arm doing the job of the malfunctioning. \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\caption{Recoverability use case}
+\centering
+\begin{tabular}{|l|p{8cm}|} \hline
+Name & Power outage interrupts the production line \\ \hline
+Actors & Production line \\ \hline
+Pre condition & The production line is running.  \\ \hline
+Description & \begin{enumerate} 
+\item The area for the production line encounters a loss of power for 5 minutes.
+\item The power is back on again.
+\item The production line is starting up again.
+\item The production line queries the supervisor system for what the current task is and what the last state was.
+\item The supervisor system responds with the details.
+\item The product line uses the details from the supervisor system to resume activity
+\end{enumerate} \\ \hline
+Post condition & The product line is running again and continuing as normal. \\
+\hline
+\end{tabular}
+\end{table}
