@@ -45,18 +45,18 @@ Post condition & The production machine is shutdown and remaining work is load-b
 \centering
 \begin{tabular}{|l|p{8cm}|} \hline
 Name & Failure of one of the robotic arms. \\ \hline
-Actors & Robotic arm, Supervisor system (system) and Production line worker \\ \hline
+Actors & Robotic arm, Monitoring system \\ \hline
 Pre condition & Production line is running  \\ \hline
 Description & \begin{enumerate} 
-\item One of the robotic arms suddently starts malfunctioning and not picking up parts.
-\item The system notices that the arm that is malfunctioning is not assembling the parts it needs to assemble.
-\item The system notifies the operator that the arm is malfunctioning.
-\item The system checks if there is another robotic arm that can pickup for the failing robotic arm.
-\item The system finds another robotic arm that can pickup the slack.
-\item The system reconfigures the production to to use the other arm.
-\item The system notifies the operator what it has changed.
+    \item The robotic arm is doing a rutine task it has been programmed for.
+    \item The robotic arm suddenly encounters an error that causes it to malfunction.
+    \item The robotic arm goes into safe mode and notifies the monitoring system.
+    \item The Monitoring system notices that the robot is malfunctioning and creates a ticket for the a need of repair for the arm(Which system?).
+    \item The Monitoring system tries to find another robot that can do the job of the arm.
+    \item The Monitoring system finds another arm that can take the job of the malfunctioning arm.
+    \item The other robotic arm picks up the load from the malfunctioning arm.
 \end{enumerate} \\ \hline
-Post condition & The system keeps runnng with the other arm doing the job of the malfunctioning. \\
+Post condition & The system keeps runnng with the other arm is doing the job of the malfunctioning and there is a ticket about the malfunctioning robot in the system. \\
 \hline
 \end{tabular}
 \end{table}
@@ -77,6 +77,27 @@ Description & \begin{enumerate}
 \item The product line uses the details from the supervisor system to resume activity
 \end{enumerate} \\ \hline
 Post condition & The product line is running again and continuing as normal. \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[h]
+\caption{Use case for a customer checking on the progress of their bike.}
+\centering
+\begin{tabular}{|l|p{8cm}|} \hline
+Name & Checking the progress on a bike order\\ \hline
+Actors & Customer, webshop(?) \\ \hline
+Pre condition & The order for the bike has been processed.  \\ \hline
+Description & \begin{enumerate} 
+    \item The Customer wants to check the progress of their bike order.
+    \item The customer logs into the webshop interface.
+    \item The customer goes to their order page.
+    \item The customer clicks on their order.
+    \item The customer can see the progress of the order.
+    \item The customer logs out of the system.
+\end{enumerate} \\ \hline
+Post condition & The customer has the information on the progress of their bike. \\
 \hline
 \end{tabular}
 \end{table}
