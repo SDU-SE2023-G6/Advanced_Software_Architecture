@@ -1,0 +1,10 @@
+version: "3.2"
+
+services:
+  service_name: 
+    build: .
+    ports:
+      - 2000:3000
+    environment:
+      - PORT=2000
+
