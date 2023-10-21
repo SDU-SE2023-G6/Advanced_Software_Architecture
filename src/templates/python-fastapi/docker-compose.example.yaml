@@ -3,7 +3,9 @@ version: "3.2"
 services:
   service_name:
     container_name: service
-    build: .
+    context:
+      build: .
+    restart: always
     ports:
       - 3000:3000
     environment:
