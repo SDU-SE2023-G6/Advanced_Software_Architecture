@@ -1,7 +1,7 @@
 # Source Code
 Docker compose file in this folder bootstraps the whole project. The different configuration variables are located in the `.env` file.
 
-TOOD:
+TODO:
 - [x] Add sevices to the compose file
 - [x] Create ENV file 
 - [ ] Get the bootstrapping working
