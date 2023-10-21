@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    container_name: rabbitmq
+    restart: unless-stopped
+    build:
+      context: docker/
+    ports:
+      - "1883:1883"
+      - "5672:5672"
+      - "8080:15672"
+      - "1885:15675"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=123
+    volumes:
+      - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      # - ./config/conf.d/*:/etc/rabbitmq/conf.d/:ro
