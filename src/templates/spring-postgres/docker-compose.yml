@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+
+  spring_template:
+    build:
+      context: ./
+    container_name: spring_template_sql
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres_container
+    environment:
+      - DB_TITLE=proddb
+      - DB_HOST=postgres_container
+      - DB_USER_NAME=postgres
+      - DB_USER_PASSWORD=postgres
+
+  postgres_container:
+    image: postgres:16.0-alpine
+    container_name: postgres_container
+    restart: always
+    environment:
+      - POSTGRES_DB=proddb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+
