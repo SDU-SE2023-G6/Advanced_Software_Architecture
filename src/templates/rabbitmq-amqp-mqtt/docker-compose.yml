@@ -7,10 +7,10 @@ services:
     build:
       context: docker/
     ports:
-      - "1883:1883"
+      - "1883:1883" # MQTT port
       - "5672:5672"
-      - "8080:15672"
-      - "1885:15675"
+      - "8080:15672" # WebUI port
+      - "1885:15675" # WS Mqtt port
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=123

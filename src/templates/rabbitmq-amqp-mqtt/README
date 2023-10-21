@@ -3,4 +3,4 @@
 TODO: 
 - [x] Enable MQTT
 - [x] Enable AMQP
-- [ ] Finish adding users on init
+- [ ] Finish adding users on init (Currently uses anonymous authentication)

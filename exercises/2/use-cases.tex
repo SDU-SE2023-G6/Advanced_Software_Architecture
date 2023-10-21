@@ -87,13 +87,16 @@ Post condition & The product line is running again and continuing as normal. \\
 \centering
 \begin{tabular}{|l|p{8cm}|} \hline
 Name & Checking the progress on a bike order\\ \hline
-Actors & Customer, webshop(?) \\ \hline
+Actors & Customer, webshop(?), Order system \\ \hline
 Pre condition & The order for the bike has been processed.  \\ \hline
 Description & \begin{enumerate} 
     \item The Customer wants to check the progress of their bike order.
     \item The customer logs into the webshop interface.
     \item The customer goes to their order page.
     \item The customer clicks on their order.
+    \item The webshop quries the Order system to get the status of the order.
+    \item The Order system responds with the status of the order. 
+    \item The webshop uses the order status to show the order
     \item The customer can see the progress of the order.
     \item The customer logs out of the system.
 \end{enumerate} \\ \hline
