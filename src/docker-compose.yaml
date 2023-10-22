@@ -1,0 +1,136 @@
+version: "3.7"
+
+services:
+  ### Supervisor system
+  supervisor_frontend:
+    container_name: supervisor_frontend
+    build:
+      context: ./frontend_javascript_express
+    ports:
+      - 2000:2000
+    environment:
+      - PORT=2000
+  supervisor_backend:
+    build:
+      context: ./spring_backend_mongo/
+    container_name: supervisor_backend
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo_db
+    environment:
+      - SPRING_MONGODB_DATABASE=proddb
+      - SPRING_MONGODB_HOST=mongo_db
+
+  ### Sheduling system
+  sheduling_frontend:
+    container_name: sheduling_frontend
+    build:
+      context: ./frontend_javascript_express
+    ports:
+      - 2000:2000
+    environment:
+      - PORT=2000
+
+  sheduling_backend:
+    build:
+      context: ./spring_backend_mongo/
+    container_name: sheduling_backend
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo_db
+    environment:
+      - SPRING_MONGODB_DATABASE=proddb
+      - SPRING_MONGODB_HOST=mongo_db
+
+  ### Assembly system
+  assembly_server:
+    container_name: assembly_server
+    build:
+      context: ./
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo_db
+    environment:
+      - SPRING_MONGODB_DATABASE=proddb
+      - SPRING_MONGODB_HOST=mongo_db
+
+
+  ### Quality control system
+  quality_control_system:
+    container_name: quality_control_system
+    build: .
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+  
+  ### Brokers
+  rabbitmq_broker:
+    image: rabbitmq:management-alpine
+    container_name: rabbitmq
+    restart: unless-stopped
+    build:
+      context: docker/
+    ports:
+      - "1883:1883" # MQTT port
+      - "5672:5672" # AMQP port
+      - "8080:15672" # WebUI port
+      - "1885:15675" # WS Mqtt port
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=123
+    volumes:
+      - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      # - ./config/conf.d/*:/etc/rabbitmq/conf.d/:ro # Can't be used. See the README in templates/rabbitmq-amqp-mqtt/README.
+
+  ### DATABASES
+  mongodb_db:
+    image: mongo:6
+    container_name: mongo_db
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: testdb
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
+  influx_db:
+    image: influxdb:1.8-alpine
+    container_name: influxdb
+    restart: always
+    environment:
+      - INFLUXDB_DB=influx
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=admin
+    ports:
+      - '8086:8086'
+    volumes:
+      - ./data/:/var/lib/influxdb
+
+  sql_db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  mongodb_data_container:
+
+
