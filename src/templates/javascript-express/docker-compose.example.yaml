@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  service_name: 
+    container_name: <name>
+    restart: always
+    context:
+      build: .
+    ports:
+      - 2000:3000
+    environment:
+      - PORT=2000
+
