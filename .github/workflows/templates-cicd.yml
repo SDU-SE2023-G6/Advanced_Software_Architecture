@@ -11,7 +11,7 @@ on:
       - master
 
 env:
-  PACKAGE_REGISTRY_TO_USE: Advanced_Software_Architecture
+  PACKAGE_REGISTRY_TO_USE: advanced_software_architecture
   GROUP_NUMBER: Group06
 
 jobs:
