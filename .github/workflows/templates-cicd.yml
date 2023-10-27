@@ -1,53 +1,53 @@
-name: CI/CD Workflow for Templates
-
-on:
-  push:
-    branches:
-      - main
-      - master
-
-jobs:
-  clone-repository:
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4.0.0
-      - name: Upload Repository artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: repository-artifacts
-          path: .
-
-  build-push-docker-image:
-    runs-on: ubuntu-latest
-    needs: [clone-repository]
-    permissions:
-      packages: write
-      contents: read
-    strategy:
-      matrix:
-        project: [javascript-express, python-fastapi, spring-mongodb, spring-postgres, sql-mariadb]
-    steps:
-      - name: Download repository artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: repository-artifacts
-          path: .
-
-      - name: Login to GitHub Package Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build & Push image for ${{ matrix.project }}
-        run: |
-          OWNER_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')/advanced_software_architecture
-          DOCKER_IMAGE_NAME=${{ matrix.project }}
-          docker build -t ghcr.io/${OWNER_LOWER}/${DOCKER_IMAGE_NAME}:1.0-${{ github.sha }} -t ghcr.io/${OWNER_LOWER}/${DOCKER_IMAGE_NAME}:latest .
-          docker push ghcr.io/${OWNER_LOWER}/${DOCKER_IMAGE_NAME}
-        working-directory: src/templates/${{ matrix.project }}
+#name: CI/CD Workflow for Templates
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#      - master
+#
+#jobs:
+#  clone-repository:
+#    runs-on: ubuntu-latest
+#    permissions:
+#      packages: write
+#      contents: read 
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v4.0.0
+#      - name: Upload Repository artifacts
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: repository-artifacts
+#          path: .
+#
+#  build-push-docker-image:
+#    runs-on: ubuntu-latest
+#    needs: [clone-repository]
+#    permissions:
+#      packages: write
+#      contents: read
+#    strategy:
+#      matrix:
+#        project: [javascript-express, python-fastapi, spring-mongodb, spring-postgres, sql-mariadb]
+#    steps:
+#      - name: Download repository artifact
+#        uses: actions/download-artifact@v2
+#        with:
+#          name: repository-artifacts
+#          path: .
+#
+#      - name: Login to GitHub Package Registry
+#        uses: docker/login-action@v2
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: Build & Push image for ${{ matrix.project }}
+#        run: |
+#          OWNER_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')/advanced_software_architecture
+#          DOCKER_IMAGE_NAME=${{ matrix.project }}
+#          docker build -t ghcr.io/${OWNER_LOWER}/${DOCKER_IMAGE_NAME}:1.0-${{ github.sha }} -t ghcr.io/${OWNER_LOWER}/${DOCKER_IMAGE_NAME}:latest .
+#          docker push ghcr.io/${OWNER_LOWER}/${DOCKER_IMAGE_NAME}
+#        working-directory: src/templates/${{ matrix.project }}
