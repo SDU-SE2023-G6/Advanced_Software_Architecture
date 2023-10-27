@@ -1,0 +1,64 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+env:
+  PACKAGE_REGISTRY_TO_USE: Advanced_Software_Architecture
+  GROUP_NUMBER: Group06
+
+jobs:
+  clone-repository:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.0.0
+      - name: Upload Repository artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: repository-artifacts
+          path: .
+
+  build-push-docker-images:
+    runs-on: ubuntu-latest
+    needs: [clone-repository]
+    permissions:
+      packages: write
+      contents: read
+    strategy:
+      matrix:
+        project_name: ["amqp-python-example", "influxdb", "javascript-express", "mongodb-mongodb", "python-fastapi", "rabbitmq-amqp-mqtt", "spring-mongodb", "spring-postgres", "sql-mariadb"]
+
+    steps:
+      - name: Download repository artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repository-artifacts
+          path: .
+
+      - name: Login to GitHub Package Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Transform username to lowercase
+        run: echo "OWNER_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Build & Push image
+        uses: docker/build-push-action@v3
+        with:
+          context: src/templates/${{ matrix.project_name }}
+          push: true
+          tags: ghcr.io/${{ env.OWNER_LOWER }}/${{ env.PACKAGE_REGISTRY_TO_USE }}/${{ matrix.project_name }}:1.0-${{ github.sha }},ghcr.io/${{ env.OWNER_LOWER }}/${{ env.PACKAGE_REGISTRY_TO_USE }}/${{ matrix.project_name }}:latest
