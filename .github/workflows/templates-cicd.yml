@@ -46,7 +46,7 @@ jobs:
 
       - name: Build & Push image for ${{ matrix.project }}
         run: |
-          OWNER_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
+          OWNER_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')/advanced_software_architecture
           DOCKER_IMAGE_NAME=${{ matrix.project }}
           docker build -t ghcr.io/${OWNER_LOWER}/${DOCKER_IMAGE_NAME}:1.0-${{ github.sha }} -t ghcr.io/${OWNER_LOWER}/${DOCKER_IMAGE_NAME}:latest .
           docker push ghcr.io/${OWNER_LOWER}/${DOCKER_IMAGE_NAME}
