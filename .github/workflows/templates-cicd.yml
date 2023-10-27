@@ -1,4 +1,4 @@
-name: CI/CD Workflow
+name: CI/CD Workflow for Templates
 
 on:
   push:
@@ -29,7 +29,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        project: [amqp-python-example, influxdb, javascript-express, mongodb-mongodb, python-fastapi, rabbitmq-amqp-mqtt, spring-mongodb, spring-postgres, sql-mariadb]
+        project: [javascript-express, python-fastapi, spring-mongodb, spring-postgres, sql-mariadb]
     steps:
       - name: Download repository artifact
         uses: actions/download-artifact@v2
