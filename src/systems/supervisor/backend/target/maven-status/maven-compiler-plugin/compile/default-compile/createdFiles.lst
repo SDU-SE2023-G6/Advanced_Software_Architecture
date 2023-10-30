@@ -1,0 +1,10 @@
+dk/sdu/se23g6/arch/projecttitle/example/models/OrderResponse.class
+dk/sdu/se23g6/arch/projecttitle/SecurityConfig$1.class
+dk/sdu/se23g6/arch/projecttitle/example/AmqpModule/AmqpConfiguration.class
+dk/sdu/se23g6/arch/projecttitle/example/AmqpModule/AmqpListener.class
+dk/sdu/se23g6/arch/projecttitle/example/models/Order.class
+dk/sdu/se23g6/arch/projecttitle/MainApplication.class
+dk/sdu/se23g6/arch/projecttitle/example/AmqpModule/AmqpSender.class
+dk/sdu/se23g6/arch/projecttitle/example/ExampleController.class
+dk/sdu/se23g6/arch/projecttitle/example/AmqpModule/Receiver.class
+dk/sdu/se23g6/arch/projecttitle/SecurityConfig.class

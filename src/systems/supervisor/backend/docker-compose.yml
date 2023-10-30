@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+
+  spring_template:
+    build:
+      context: ./
+    container_name: spring_template_mongodb
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongodb_container
+    environment:
+      - SPRING_MONGODB_DATABASE=proddb
+      - SPRING_MONGODB_HOST=mongodb_container
+
+  mongodb_container:
+    image: mongo:6
+    container_name: mongodb_container
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: testdb
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
+volumes:
+  mongodb_data_container:
+
+
