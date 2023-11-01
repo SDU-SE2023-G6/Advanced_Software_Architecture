@@ -1,6 +1,8 @@
 version: "3.8"
 services:
   rabbitmq:
+    networks:
+      - tomas-the-tank
     image: rabbitmq:management-alpine
     container_name: rabbitmq
     restart: unless-stopped
@@ -9,7 +11,7 @@ services:
     ports:
       - "1883:1883" # MQTT port
       - "5672:5672"
-      - "8080:15672" # WebUI port
+      - "15672:15672" # WebUI port
       - "1885:15675" # WS Mqtt port
     environment:
       - RABBITMQ_DEFAULT_USER=admin
@@ -18,3 +20,7 @@ services:
       - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
       - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
       # - ./config/conf.d/*:/etc/rabbitmq/conf.d/:ro
+
+networks:
+  tomas-the-tank:
+    external: true
