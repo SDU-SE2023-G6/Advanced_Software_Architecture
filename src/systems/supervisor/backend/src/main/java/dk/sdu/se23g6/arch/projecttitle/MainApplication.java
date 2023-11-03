@@ -1,12 +1,10 @@
 package dk.sdu.se23g6.arch.projecttitle;
 
-import com.mongodb.client.model.UpdateOneModel;
 import dk.sdu.se23g6.arch.projecttitle.example.MongoModels.AssemblyOrderRepository;
 import dk.sdu.se23g6.arch.projecttitle.example.MongoModels.OrdersRepository;
-import dk.sdu.se23g6.arch.projecttitle.example.models.CreateOrderDTO;
-import dk.sdu.se23g6.arch.projecttitle.example.models.Order;
-import dk.sdu.se23g6.arch.projecttitle.example.models.AssemblyOrder;
-import org.bson.Document;
+import CreateOrderDTO;
+import dk.sdu.se23g6.arch.projecttitle.example.models.Order.Order;
+import dk.sdu.se23g6.arch.projecttitle.example.models.AssemblySystem.AssemblyOrder;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -14,8 +12,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.messaging.handler.annotation.Payload;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /** Application entrypoint. */
 @SpringBootApplication
@@ -35,13 +35,12 @@ public class MainApplication {
 
   @RabbitListener(queues = "orders")
   public void listenToOrders (@Payload CreateOrderDTO in) {
-    System.out.println("OrderId: " + in.orderId() + " and stepId: " + in.stepId());
+    System.out.println("Order with " + in.steps().size() + " steps");
   }
 
   @RabbitListener(queues = "assemblyOrders")
   public void listenToAssemblyResponse(@Payload AssemblyOrder in) {
-    UpdateOneModel<AssemblyOrderRepository> updateOneModel = new UpdateOneModel<AssemblyOrderRepository>();
-    assemblyOrderRepository.findBy();
+    assemblyOrderRepository.save(in);
     System.out.println("Recieved " + in.getOrderId() + " and stepId: " + in.getStepId());
   }
   @Bean
@@ -50,9 +49,14 @@ public class MainApplication {
       ordersRepository.deleteAll();
       assemblyOrderRepository.deleteAll();
 
-      Order initOrder = new Order("10", "client.py");
-      ordersRepository.save(initOrder);
-      CreateOrderDTO newOrder = new CreateOrderDTO(initOrder.getStepId(), initOrder.getOrderId());
+      List<String> orderSteps = new ArrayList<>();
+      orderSteps.add("./attach-wheel.py");
+      orderSteps.add("./attach-pedals.py");
+      orderSteps.add("./attach-chain.py");
+
+      Order initOrder = new Order("10", orderSteps);
+      Order order = ordersRepository.save(initOrder);
+      CreateOrderDTO newOrder = new CreateOrderDTO(orderSteps);
       template.send("orders", converter.toMessage(newOrder, null));
     };
   }

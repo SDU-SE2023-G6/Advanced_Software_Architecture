@@ -1,4 +1,4 @@
-package dk.sdu.se23g6.arch.projecttitle.models;
+package dk.sdu.se23g6.arch.projecttitle.models.AssemblySystem;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RandomData {
+public class AssemblyOrder {
 
     String stepId;
     String orderId;

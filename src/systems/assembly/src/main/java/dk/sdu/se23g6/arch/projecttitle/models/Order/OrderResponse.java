@@ -1,4 +1,4 @@
-package dk.sdu.se23g6.arch.projecttitle.models;
+package dk.sdu.se23g6.arch.projecttitle.models.Order;
 
 
 public class OrderResponse {

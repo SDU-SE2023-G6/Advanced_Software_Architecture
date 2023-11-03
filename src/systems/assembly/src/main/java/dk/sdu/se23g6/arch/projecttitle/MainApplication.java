@@ -2,7 +2,9 @@ package dk.sdu.se23g6.arch.projecttitle;
 
 
 import dk.sdu.se23g6.arch.projecttitle.example.RandomDataGenerator;
-import dk.sdu.se23g6.arch.projecttitle.models.CreateOrderDTO;
+import dk.sdu.se23g6.arch.projecttitle.models.AssemblySystem.AssemblyOrder;
+import dk.sdu.se23g6.arch.projecttitle.models.Order.CreateOrderDTO;
+import dk.sdu.se23g6.arch.projecttitle.models.Order.Order;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -50,10 +52,11 @@ public class MainApplication {
   }
 
   @RabbitListener(queues = RECEIVER_QUEUE)
-  public void listen(@Payload CreateOrderDTO in) {
-    System.out.println("Received order from the Supervisor system with orderId " + in.orderId() + " and stepId " + in.stepId());
+  public void listen(@Payload Order in) {
+    System.out.println("Received order from the Supervisor system with orderId " + in.getOrderId() + " and " + in.getSteps().size() + " steps");
     RandomDataGenerator generator = new RandomDataGenerator();
-    Message message = converter.toMessage(generator.createRandomResponse(String.valueOf(in.orderId())), null);
+    AssemblyOrder order = generator.createRandomResponse(in.getOrderId());
+    Message message = converter.toMessage(order, null);
     this.template.send(SENDER_QUEUE, message);
   }
 

@@ -3,10 +3,10 @@ package dk.sdu.se23g6.arch.projecttitle.example;
 
 import dk.sdu.se23g6.arch.projecttitle.example.MongoModels.AssemblyOrderRepository;
 import dk.sdu.se23g6.arch.projecttitle.example.MongoModels.OrdersRepository;
-import dk.sdu.se23g6.arch.projecttitle.example.models.AssemblyOrder;
-import dk.sdu.se23g6.arch.projecttitle.example.models.CreateOrderDTO;
-import dk.sdu.se23g6.arch.projecttitle.example.models.Order;
-import dk.sdu.se23g6.arch.projecttitle.example.models.OrderError;
+import dk.sdu.se23g6.arch.projecttitle.example.models.AssemblySystem.AssemblyOrder;
+import CreateOrderDTO;
+import dk.sdu.se23g6.arch.projecttitle.example.models.Order.Order;
+import dk.sdu.se23g6.arch.projecttitle.example.models.Order.OrderError;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -42,6 +42,7 @@ public class ExampleController {
     @ApiResponse(responseCode = "200", description = "Send a order to the assembly system")
     public String send(@RequestBody CreateOrderDTO order) {
         this.template.send(this.QUEUE_KEY, converter.toMessage(order, null));
+        Order newOrder = new Order(order.stepId());
         this.ordersRepository.save(new Order(order.orderId(), order.stepId()));
         return "OK";
     }
