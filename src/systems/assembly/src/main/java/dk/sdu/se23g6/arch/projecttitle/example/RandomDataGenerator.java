@@ -1,5 +1,7 @@
 package dk.sdu.se23g6.arch.projecttitle.example;
 
+import dk.sdu.se23g6.arch.projecttitle.models.AssemblySystemResponseDTO;
+
 import java.util.UUID;
 import java.time.Instant;
 import java.security.SecureRandom;
@@ -34,6 +36,16 @@ public class RandomDataGenerator {
                 .withTimestamp(generateRandomTimestamp())
                 .withStatus(generateRandomStatus())
                 .build();
+    }
+
+    public AssemblySystemResponseDTO createRandomResponse(String id) {
+        return new AssemblySystemResponseDTO(
+                generateRandomId(),
+                id,
+                generateRandomId(),
+                generateRandomTimestamp(),
+                generateRandomStatus()
+        );
     }
 
 }
