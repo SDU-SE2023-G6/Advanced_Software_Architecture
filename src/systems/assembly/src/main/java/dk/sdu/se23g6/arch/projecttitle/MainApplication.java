@@ -1,10 +1,10 @@
 package dk.sdu.se23g6.arch.projecttitle;
 
 
-import dk.sdu.se23g6.arch.projecttitle.example.RandomDataGenerator;
-import dk.sdu.se23g6.arch.projecttitle.models.AssemblySystem.AssemblyOrder;
-import dk.sdu.se23g6.arch.projecttitle.models.Order.CreateOrderDTO;
-import dk.sdu.se23g6.arch.projecttitle.models.Order.Order;
+import dk.sdu.se23g6.arch.projecttitle.models.order.Order;
+import dk.sdu.se23g6.arch.projecttitle.models.order.OrderStep;
+import dk.sdu.se23g6.arch.projecttitle.models.order.StepStatus;
+import dk.sdu.se23g6.arch.projecttitle.models.order.dto.OrderStepDTO;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -14,8 +14,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
+
+import java.util.Random;
 
 /** Application entrypoint. */
+@EnableAsync
 @SpringBootApplication
 public class MainApplication {
 
@@ -53,11 +58,23 @@ public class MainApplication {
 
   @RabbitListener(queues = RECEIVER_QUEUE)
   public void listen(@Payload Order in) {
-    System.out.println("Received order from the Supervisor system with orderId " + in.getOrderId() + " and " + in.getSteps().size() + " steps");
-    RandomDataGenerator generator = new RandomDataGenerator();
-    AssemblyOrder order = generator.createRandomResponse(in.getOrderId());
-    Message message = converter.toMessage(order, null);
-    this.template.send(SENDER_QUEUE, message);
+    System.out.println("Received order from the Supervisor system with orderId " + in.getOrderId());
+
+    Random gen = new Random();
+    System.out.println("Processing " + in.getSteps().size() + " steps.");
+
+    for (OrderStep step : in.getSteps()) {
+      boolean shouldComplete = gen.nextBoolean();
+      try {
+        Thread.sleep(3000);
+      } catch (InterruptedException e) {
+        System.out.println("Timeout error happened");
+      }
+      step.setOrderStatus(StepStatus.COMPLETED);
+      System.out.println("Completing orders " + );
+      OrderStepDTO orderStepDTO = new OrderStepDTO(in.getOrderId(), step.getStepId(), StepStatus.COMPLETED);
+      this.template.send(SENDER_QUEUE, converter.toMessage(orderStepDTO, null));
+    }
   }
 
 }

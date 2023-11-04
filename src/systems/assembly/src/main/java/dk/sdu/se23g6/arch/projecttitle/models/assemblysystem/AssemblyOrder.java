@@ -1,4 +1,4 @@
-package dk.sdu.se23g6.arch.projecttitle.models.AssemblySystem;
+package dk.sdu.se23g6.arch.projecttitle.models.assemblysystem;
 
 import lombok.*;
 

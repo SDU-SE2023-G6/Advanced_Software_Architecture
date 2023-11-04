@@ -1,4 +1,4 @@
-package dk.sdu.se23g6.arch.projecttitle.models.Order;
+package dk.sdu.se23g6.arch.projecttitle.example.models.order.dto;
 
 import java.util.List;
 

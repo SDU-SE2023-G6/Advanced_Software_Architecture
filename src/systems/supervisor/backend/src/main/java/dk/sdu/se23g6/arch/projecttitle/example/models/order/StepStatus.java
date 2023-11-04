@@ -1,4 +1,4 @@
-package dk.sdu.se23g6.arch.projecttitle.example.models.Order;
+package dk.sdu.se23g6.arch.projecttitle.example.models.order;
 
 public enum StepStatus {
     NOT_STARTED,

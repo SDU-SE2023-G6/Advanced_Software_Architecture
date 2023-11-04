@@ -1,4 +1,4 @@
-package dk.sdu.se23g6.arch.projecttitle.models.Order;
+package dk.sdu.se23g6.arch.projecttitle.example.models.order;
 
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,15 +9,21 @@ import java.util.List;
 
 
 @Data
+@Document
 public class Order {
+    @MongoId
     private String orderId;
-    private List<OrderStep> steps; // Filename for program
+    private List<OrderStep> steps;
+
+    public Order() {
+        // Default no-argument constructor
+    }
 
     public Order(String orderId, List<String> stepIds) {
         this.orderId = orderId;
         this.steps = new ArrayList<>();
-        stepIds.stream().forEach(step ->  {
-           steps.add(new OrderStep(step, StepStatus.NOT_STARTED));
+        stepIds.forEach(step -> {
+            steps.add(new OrderStep(step, StepStatus.NOT_STARTED));
         });
     }
 }

@@ -1,7 +1,6 @@
 package dk.sdu.se23g6.arch.projecttitle.example;
 
-import dk.sdu.se23g6.arch.projecttitle.models.Assembly.AssemblySystemResponseDTO;
-import dk.sdu.se23g6.arch.projecttitle.models.AssemblySystem.AssemblyOrder;
+import dk.sdu.se23g6.arch.projecttitle.models.assemblysystem.AssemblyOrder;
 
 import java.util.UUID;
 import java.time.Instant;
