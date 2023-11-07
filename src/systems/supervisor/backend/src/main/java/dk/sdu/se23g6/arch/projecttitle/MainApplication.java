@@ -9,9 +9,11 @@ import dk.sdu.se23g6.arch.projecttitle.example.models.order.Order;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -35,7 +37,15 @@ public class MainApplication {
   }
 
   public static void main(String[] args) {
-    SpringApplication.run(MainApplication.class, args);
+    ConfigurableApplicationContext app = null;
+    try {
+      app = SpringApplication.run(MainApplication.class, args);
+    } catch (Exception e) {
+      System.out.println(e);
+      if (app != null) {
+        app.close();
+      }
+    }
   }
 
   @RabbitListener(queues = "assemblyOrders")
@@ -56,8 +66,13 @@ public class MainApplication {
   @Bean
   public CommandLineRunner initDatabase(RabbitTemplate template, MessageConverter converter) {
     return args -> {
-      ordersRepository.deleteAll();
-      assemblyOrderRepository.deleteAll();
+      try {
+        ordersRepository.deleteAll();
+        assemblyOrderRepository.deleteAll();
+      } catch (Exception e)  {
+        System.out.println(e);
+
+      }
 
       List<String> orderSteps = new ArrayList<>();
       orderSteps.add("./attach-wheel.py");

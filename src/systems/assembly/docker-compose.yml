@@ -1,18 +1,22 @@
 version: '3.7'
 services:
-
   assembly_backend:
-    networks:
-      - tomas-the-tank
-    build:
-      context: ./
+    image: assembly_system:prod
     container_name: assembly_system
+    networks:
+      - system
     restart: always
     ports:
-      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=admin
+      - RABBITMQ_PASSWORD=123
+
 
 networks:
-  tomas-the-tank:
+  system:
     external: true
 
 
