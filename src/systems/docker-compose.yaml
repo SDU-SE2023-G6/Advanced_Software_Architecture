@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+  mongodb_container:
+    image: mongo:6
+    container_name: mongodb_container
+    networks:
+      - system
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: proddb
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    networks:
+      - system
+    container_name: rabbitmq
+    restart: unless-stopped
+    ports:
+      - "1883:1883" # MQTT port
+      - "5672:5672"
+      - "15672:15672" # WebUI port
+      - "1885:15675" # WS Mqtt port
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=123
+    volumes:
+      - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      # - ./config/conf.d/*:/etc/rabbitmq/conf.d/:ro
+
+volumes:
+  mongodb_data_container:
+
+networks:
+  system:
+    external: true
