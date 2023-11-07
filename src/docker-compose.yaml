@@ -23,7 +23,7 @@ services:
       - SPRING_MONGODB_DATABASE=proddb
       - SPRING_MONGODB_HOST=mongo_db
 
-  ### Sheduling system
+  ### Scheduling system
   sheduling_frontend:
     container_name: sheduling_frontend
     build:

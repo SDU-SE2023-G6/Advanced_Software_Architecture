@@ -1,6 +1,5 @@
-package dk.sdu.se23g6.arch.projecttitle.AmqpModule;
+package dk.sdu.se23g6.arch.assembly.amqp;
 
-import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
