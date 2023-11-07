@@ -30,8 +30,8 @@ services:
     image: rabbitmq:management-alpine
     container_name: rabbitmq
     restart: unless-stopped
-    build:
-      context: docker/
+#    build:
+#      context: docker/
     ports:
       - "1883:1883" # MQTT port
       - "5672:5672"

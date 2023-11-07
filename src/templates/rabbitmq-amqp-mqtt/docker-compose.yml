@@ -6,8 +6,9 @@ services:
     image: rabbitmq:management-alpine
     container_name: rabbitmq
     restart: unless-stopped
-    build:
-      context: docker/
+# Don't know if this is required, but it made docker compose up fail :(
+#    build:
+#      context: docker/
     ports:
       - "1883:1883" # MQTT port
       - "5672:5672"

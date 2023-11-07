@@ -1,12 +1,11 @@
 package dk.sdu.se23g6.arch.projecttitle.example;
 
 
-import dk.sdu.se23g6.arch.projecttitle.example.MongoModels.AssemblyOrderRepository;
-import dk.sdu.se23g6.arch.projecttitle.example.MongoModels.OrdersRepository;
-import dk.sdu.se23g6.arch.projecttitle.example.models.AssemblySystem.AssemblyOrder;
-import CreateOrderDTO;
-import dk.sdu.se23g6.arch.projecttitle.example.models.Order.Order;
-import dk.sdu.se23g6.arch.projecttitle.example.models.Order.OrderError;
+import dk.sdu.se23g6.arch.projecttitle.example.mongomodels.AssemblyOrderRepository;
+import dk.sdu.se23g6.arch.projecttitle.example.mongomodels.OrdersRepository;
+import dk.sdu.se23g6.arch.projecttitle.example.models.assemblysystem.AssemblyOrder;
+import dk.sdu.se23g6.arch.projecttitle.example.models.order.dto.CreateOrderDTO;
+import dk.sdu.se23g6.arch.projecttitle.example.models.order.Order;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Random;
 
 @RestController
 public class ExampleController {
@@ -40,10 +40,14 @@ public class ExampleController {
 
     @PostMapping("/order/create")
     @ApiResponse(responseCode = "200", description = "Send a order to the assembly system")
-    public String send(@RequestBody CreateOrderDTO order) {
-        this.template.send(this.QUEUE_KEY, converter.toMessage(order, null));
-        Order newOrder = new Order(order.stepId());
-        this.ordersRepository.save(new Order(order.orderId(), order.stepId()));
+    public String send(@RequestBody CreateOrderDTO orderDTO) {
+        Random randomGenerator = new Random();
+
+        int orderId = randomGenerator.nextInt(0, (int) Math.pow(10,10));
+        Order newOrder = new Order(String.valueOf(orderId), orderDTO.steps());
+        this.ordersRepository.save(newOrder);
+
+        this.template.send(this.QUEUE_KEY, converter.toMessage(newOrder, null));
         return "OK";
     }
 
@@ -51,9 +55,6 @@ public class ExampleController {
         List<AssemblyOrder> orders = assemblyOrderRepository.findAll();
         assemblyOrderRepository.deleteAll();
         return orders;
-    }
-    public List<OrderError> errors() {
-        return null;
     }
 
 }
