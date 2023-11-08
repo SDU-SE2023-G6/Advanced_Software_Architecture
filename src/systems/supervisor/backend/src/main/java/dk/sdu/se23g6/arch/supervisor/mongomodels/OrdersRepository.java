@@ -1,6 +1,6 @@
-package dk.sdu.se23g6.arch.projecttitle.example.mongomodels;
+package dk.sdu.se23g6.arch.supervisor.mongomodels;
 
-import dk.sdu.se23g6.arch.projecttitle.example.models.order.Order;
+import dk.sdu.se23g6.arch.supervisor.models.order.Order;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface OrdersRepository extends MongoRepository<Order, String> {

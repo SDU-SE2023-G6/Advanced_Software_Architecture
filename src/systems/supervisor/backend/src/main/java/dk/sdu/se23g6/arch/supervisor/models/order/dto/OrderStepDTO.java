@@ -1,6 +1,6 @@
-package dk.sdu.se23g6.arch.projecttitle.example.models.order.dto;
+package dk.sdu.se23g6.arch.supervisor.models.order.dto;
 
-import dk.sdu.se23g6.arch.projecttitle.example.models.order.StepStatus;
+import dk.sdu.se23g6.arch.supervisor.models.order.StepStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;

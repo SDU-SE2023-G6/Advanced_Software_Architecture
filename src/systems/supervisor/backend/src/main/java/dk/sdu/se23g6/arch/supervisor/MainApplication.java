@@ -1,28 +1,23 @@
-package dk.sdu.se23g6.arch.projecttitle;
+package dk.sdu.se23g6.arch.supervisor;
 
-import dk.sdu.se23g6.arch.projecttitle.example.models.order.OrderStep;
-import dk.sdu.se23g6.arch.projecttitle.example.models.order.dto.CreateOrderDTO;
-import dk.sdu.se23g6.arch.projecttitle.example.models.order.dto.OrderStepDTO;
-import dk.sdu.se23g6.arch.projecttitle.example.mongomodels.AssemblyOrderRepository;
-import dk.sdu.se23g6.arch.projecttitle.example.mongomodels.OrdersRepository;
-import dk.sdu.se23g6.arch.projecttitle.example.models.order.Order;
+import dk.sdu.se23g6.arch.supervisor.models.order.Order;
+import dk.sdu.se23g6.arch.supervisor.models.order.OrderStep;
+import dk.sdu.se23g6.arch.supervisor.models.order.dto.OrderStepDTO;
+import dk.sdu.se23g6.arch.supervisor.mongomodels.AssemblyOrderRepository;
+import dk.sdu.se23g6.arch.supervisor.mongomodels.OrdersRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.scheduling.annotation.EnableAsync;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /** Application entrypoint. */
 @SpringBootApplication

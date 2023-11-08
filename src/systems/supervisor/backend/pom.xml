@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>dk.sdu.se23g6.arch</groupId>
-	<artifactId>projecttitle</artifactId>
+	<artifactId>supervisor</artifactId>
 	<version>1.0.0</version>
-	<name>projecttitle</name>
+	<name>supervisor</name>
 	<properties>
 		<java.version>17</java.version>
 		<spring.version>3.1.4</spring.version>
@@ -90,7 +90,6 @@
 			<optional>true</optional>
 			<version>${spring.version}</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>

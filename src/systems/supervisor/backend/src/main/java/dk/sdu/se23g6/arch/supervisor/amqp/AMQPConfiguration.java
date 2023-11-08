@@ -1,4 +1,4 @@
-package dk.sdu.se23g6.arch.projecttitle.example.AmqpModule;
+package dk.sdu.se23g6.arch.supervisor.amqp;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AmqpConfiguration {
+public class AMQPConfiguration {
 
     private static final String SENDER_QUEUE = "orders";
     private static final String RECEIVER_QUEUE = "assemblyOrders";

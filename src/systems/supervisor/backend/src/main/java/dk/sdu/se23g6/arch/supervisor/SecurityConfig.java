@@ -1,4 +1,4 @@
-package dk.sdu.se23g6.arch.projecttitle;
+package dk.sdu.se23g6.arch.supervisor;
 
 import jakarta.validation.constraints.NotNull;
 import org.springframework.context.annotation.Bean;
