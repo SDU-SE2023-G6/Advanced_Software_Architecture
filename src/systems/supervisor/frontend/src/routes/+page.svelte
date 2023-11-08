@@ -1,4 +1,7 @@
-<script>
+<script lang="ts">
+    
+  export let data;
+
   import { onMount } from "svelte";
 
   let step_id = "";
@@ -39,7 +42,9 @@
 
 <main>
   <h1>Supervisor Fronted</h1>
-
+  <p>
+    {{ data }}
+  </p>
   <div class="container">
     <section class="instructions">
       <h2>Send instructions</h2>
