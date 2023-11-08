@@ -2,11 +2,13 @@ package dk.sdu.se23g6.arch.assembly.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
-public class ProductionStep {
+public class ProductionOrderStep {
     private String orderId;
-    private String stepId;
+    private String stepId; // maps to file name of production program of a production machine in S3
     private StepStatus orderStatus;
 }

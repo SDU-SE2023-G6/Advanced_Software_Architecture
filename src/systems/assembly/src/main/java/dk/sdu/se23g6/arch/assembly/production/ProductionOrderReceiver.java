@@ -1,10 +1,18 @@
 package dk.sdu.se23g6.arch.assembly.production;
 
+import dk.sdu.se23g6.arch.assembly.model.ProductionOrder;
+import dk.sdu.se23g6.arch.assembly.model.ProductionOrderStep;
+import dk.sdu.se23g6.arch.assembly.model.StepStatus;
+import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ProductionOrderReceiver {
@@ -12,36 +20,28 @@ public class ProductionOrderReceiver {
     private static final Logger log = LoggerFactory.getLogger(ProductionOrderReceiver.class);
     private static final String PRODUCTION_ORDER_QUEUE = "productionOrders";
 
-    // TODO find a way of returning the production steps independently
-//    @RabbitListener(queues = PRODUCTION_ORDER_QUEUE)
-//    public ProductionStep listen(@Payload ProductionOrder incomingProductionOrder) {
-//        System.out.println("Received order from the Supervisor system with orderId " + incomingProductionOrder.getOrderId());
-//        System.out.println("Processing " + incomingProductionOrder.getSteps().size() + " steps.");
-//        for (ProductionStep productionStep : incomingProductionOrder.getSteps()) {
-//            try {
-//                // Interrupt the process for 1 to 10 seconds
-//                int factor = ThreadLocalRandom.current().nextInt(1, 11);
-//                Thread.sleep(factor * 1000L);
-//            } catch (InterruptedException e) {
-//                System.out.println(e);
-//                // TODO Direct Reply-To to Supervisor system: "error occurred"
-//                continue;
-//            }
-//            productionStep.setOrderStatus(StepStatus.COMPLETED);
-//            System.out.println("Completing orders ");
-//            productionStep.setOrderStatus(StepStatus.COMPLETED);
-////            this.template.send(PRODUCTION_ORDER_QUEUE, converter.toMessage(productionStep, new MessageProperties()));
-//            // TODO Direct Reply-To to Supervisor system: "production step status update"
-//            return productionStep;
-//        }
-//        return null;
-//    }
-
+    // TODO Scale!!! Either run on multiple threads or multiple containers
     @RabbitListener(queues = PRODUCTION_ORDER_QUEUE)
-    public String listen(@Payload String incomingMessage) {
-        log.info("Production order request received.");
-        log.info(incomingMessage);
-        return incomingMessage;
+    public List<ProductionOrderStep> listen(@Payload ProductionOrder incomingOrder) {
+        log.info("Production order " + incomingOrder.getOrderId() + " request received.");
+        log.info("Processing " + incomingOrder.getSteps().size() + " steps.");
+        StopWatch stopWatch = new StopWatch();
+        for (ProductionOrderStep step : incomingOrder.getSteps()) {
+            try {
+                stopWatch.start();
+                log.info("Processing step " + step);
+                step.setOrderStatus(StepStatus.IN_PROGRESS);
+                Thread.sleep(ThreadLocalRandom.current().nextInt(1, 4) * 1000L); // 1-3 seconds
+                step.setOrderStatus(StepStatus.COMPLETED);
+                log.info("Step " + step + " completed in " + stopWatch.getTime(TimeUnit.MILLISECONDS) + " ms.");
+            } catch (InterruptedException e) {
+                step.setOrderStatus(StepStatus.FAILED);
+                log.error(e.getMessage());
+            }
+            stopWatch.reset();
+        }
+        log.info("Production process for order " + incomingOrder.getOrderId() + " completed.");
+        return incomingOrder.getSteps();
     }
 
 }
