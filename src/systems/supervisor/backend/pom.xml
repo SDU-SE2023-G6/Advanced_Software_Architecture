@@ -54,11 +54,11 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- ODM & Mapping -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-data-mongodb</artifactId>-->
+<!--			<version>${spring.version}</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -105,12 +105,6 @@
 				<configuration>
 					<source>17</source>
 					<target>17</target>
-					<exclusions>
-						<exclusion>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclusion>
-					</exclusions>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>

@@ -22,7 +22,8 @@ RUN mvn -B -Dmaven.test.skip clean package spring-boot:repackage
 # Runtime 
 #
 FROM eclipse-temurin:21-jre-alpine
-COPY --from=builder /build/target/projecttitle-*.jar /app.jar
+COPY --from=builder /build/target/supervisor-*.jar /app.jar
+
 
 EXPOSE 8080
 EXPOSE 80
