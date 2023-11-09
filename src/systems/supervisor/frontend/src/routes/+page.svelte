@@ -1,6 +1,4 @@
 <script lang="ts">
-    
-  export let data;
 
   import { onMount } from "svelte";
   import { ExampleControllerApi } from "../api/apis/ExampleControllerApi";
@@ -60,9 +58,11 @@
         <details>
           <summary class="feedback">{order.orderId}</summary>
             {#if order.steps}
-            <ul>
+            <ul style="padding-left: 20px">
               {#each order.steps as step}
-                <li class="feedback">{step.stepId } - {step.orderStatus}</li>
+                <li class="feedback">
+                  {step.stepId } - {step.orderStatus}
+                </li>
               {/each}
             </ul>
             {/if}
