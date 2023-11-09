@@ -29,12 +29,12 @@ public class ProductionOrderReceiver {
             try {
                 stopWatch.start();
                 log.info("Processing step " + step);
-                step.setOrderStatus(StepStatus.IN_PROGRESS);
+                step.setStepStatus(StepStatus.IN_PROGRESS);
                 Thread.sleep(ThreadLocalRandom.current().nextInt(1, 4) * 1000L); // 1-3 seconds
-                step.setOrderStatus(StepStatus.COMPLETED);
+                step.setStepStatus(StepStatus.COMPLETED);
                 log.info("Step " + step + " completed in " + stopWatch.getTime(TimeUnit.MILLISECONDS) + " ms.");
             } catch (InterruptedException e) {
-                step.setOrderStatus(StepStatus.FAILED);
+                step.setStepStatus(StepStatus.FAILED);
                 log.error(e.getMessage());
             }
             stopWatch.reset();

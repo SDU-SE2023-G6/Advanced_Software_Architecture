@@ -43,12 +43,12 @@ public class ProductionOrderSender {
                 String orderIdPrefix = "[Order " + productionOrderSteps.get(0).getOrderId() + "] ";
                 log.info(orderIdPrefix + "Production order response received.");
                 List<String> successfulSteps = productionOrderSteps.stream()
-                        .filter(productionOrderStep -> productionOrderStep.getOrderStatus() == StepStatus.COMPLETED)
+                        .filter(productionOrderStep -> productionOrderStep.getStepStatus() == StepStatus.COMPLETED)
                         .map(ProductionOrderStep::getStepId)
                         .toList();
                 log.info(orderIdPrefix + "Successfully completed steps: " + successfulSteps);
                 List<String> unsuccessfulSteps = productionOrderSteps.stream()
-                        .filter(productionOrderStep -> productionOrderStep.getOrderStatus() != StepStatus.COMPLETED)
+                        .filter(productionOrderStep -> productionOrderStep.getStepStatus() != StepStatus.COMPLETED)
                         .map(ProductionOrderStep::getStepId)
                         .toList();
                 if (unsuccessfulSteps.size() > 0) {
