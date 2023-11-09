@@ -1,7 +1,7 @@
 package dk.sdu.se23g6.arch.supervisor.amqp;
 
-import dk.sdu.se23g6.arch.supervisor.models.order.ProductionOrder;
-import dk.sdu.se23g6.arch.supervisor.models.order.ProductionOrderStep;
+import dk.sdu.se23g6.arch.supervisor.model.ProductionOrder;
+import dk.sdu.se23g6.arch.supervisor.model.ProductionOrderStep;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.AsyncRabbitTemplate;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;

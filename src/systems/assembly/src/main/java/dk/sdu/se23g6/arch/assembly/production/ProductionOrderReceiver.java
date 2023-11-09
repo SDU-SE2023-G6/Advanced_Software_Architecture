@@ -20,7 +20,6 @@ public class ProductionOrderReceiver {
     private static final Logger log = LoggerFactory.getLogger(ProductionOrderReceiver.class);
     private static final String PRODUCTION_ORDER_QUEUE = "productionOrders";
 
-    // TODO Scale!!! Either run on multiple threads or multiple containers
     @RabbitListener(queues = PRODUCTION_ORDER_QUEUE)
     public List<ProductionOrderStep> listen(@Payload ProductionOrder incomingOrder) {
         log.info("Production order " + incomingOrder.getOrderId() + " request received.");

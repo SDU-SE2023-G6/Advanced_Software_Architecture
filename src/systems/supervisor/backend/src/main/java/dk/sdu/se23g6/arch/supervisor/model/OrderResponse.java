@@ -1,4 +1,4 @@
-package dk.sdu.se23g6.arch.supervisor.models.order;
+package dk.sdu.se23g6.arch.supervisor.model;
 
 
 public class OrderResponse {

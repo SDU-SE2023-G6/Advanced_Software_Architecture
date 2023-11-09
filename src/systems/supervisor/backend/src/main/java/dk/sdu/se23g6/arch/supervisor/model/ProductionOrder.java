@@ -1,4 +1,4 @@
-package dk.sdu.se23g6.arch.supervisor.models.order;
+package dk.sdu.se23g6.arch.supervisor.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +18,6 @@ public class ProductionOrder {
     public ProductionOrder(String orderId, List<String> stepIds) {
         this.orderId = orderId;
         this.steps = new ArrayList<>();
-        stepIds.forEach(step -> steps.add(new ProductionOrderStep(step, StepStatus.NOT_STARTED)));
+        stepIds.forEach(step -> steps.add(new ProductionOrderStep(orderId, step, StepStatus.NOT_STARTED)));
     }
 }

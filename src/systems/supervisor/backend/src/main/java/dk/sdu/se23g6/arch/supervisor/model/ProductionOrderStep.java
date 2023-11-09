@@ -1,4 +1,4 @@
-package dk.sdu.se23g6.arch.assembly.model;
+package dk.sdu.se23g6.arch.supervisor.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
