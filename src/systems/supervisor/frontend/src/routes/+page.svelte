@@ -3,63 +3,72 @@
   export let data;
 
   import { onMount } from "svelte";
+  import { ExampleControllerApi } from "../api/apis/ExampleControllerApi";
+  import type { Order } from "../api";
 
-  let step_id = "";
-  let order_id = "";
-  let feedbacks = ["test", "test2"];
+  const exampleController = new ExampleControllerApi();
+
+  let steps: string[] = [];
+  let orders: Order[] = [];
 
   onMount(async () => {
-    step_id = "";
-    order_id = "";
-    await pullFeedbacks();
+    steps = [];
+    orders = [];
+    orders = await exampleController.getOrders(); // Hacky way to set the timer
+    setInterval(async () => {
+      orders = await exampleController.getOrders();
+    }, 1000)
+    
+
   });
 
-  async function sendInstructions() {
-    const response = await fetch("http://localhost:8000", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ step_id, order_id })
-    });
-    step_id = "";
-    order_id = "";
-  }
-  async function pullFeedbacks() {
-    const response = await fetch("http://localhost:8000", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
+  async function sendInstructions(order_steps: string[]) {
+    exampleController.send({
+      createOrderDTO: {
+        steps: order_steps
       }
-    });
-    const pulledList = await response.json();
-    //push to feedbacks
-    for(const feedback of pulledList){
-      feedbacks.push(feedback);
-    }
+    })
+  }
+
+  function addStep() {
+    steps = [...steps, ""];
+  }
+
+  function removeStep(index: number) {
+    let newSteps = steps.slice();
+    newSteps.splice(index, 1);
+    steps = [...newSteps];
   }
 </script>
 
 <main>
   <h1>Supervisor Fronted</h1>
-  <p>
-    {{ data }}
-  </p>
   <div class="container">
     <section class="instructions">
       <h2>Send instructions</h2>
-      <label>Step ID: <input bind:value={step_id}></label>
-      <label>Order ID: <input bind:value={order_id}></label>
-      <button on:click={sendInstructions}>Send</button>
+      <label>Steps <button on:click={() => addStep()}>Add step+</button></label>
+      {#each steps as step, index}
+        <input bind:value={steps[index]}>
+      {/each}
+      <button on:click={() => sendInstructions(steps)}>Send</button>
     </section>
 
     <section class="feedbacks">
       <h2>Assembly feedbacks</h2>
-      <ul>
-        {#each feedbacks as feedback}
-          <li class="feedback">{feedback}</li>
+      {#if orders.length > 0}
+        {#each orders as order}
+        <details>
+          <summary class="feedback">{order.orderId}</summary>
+            {#if order.steps}
+            <ul>
+              {#each order.steps as step}
+                <li class="feedback">{step.stepId } - {step.orderStatus}</li>
+              {/each}
+            </ul>
+            {/if}
+        </details>
         {/each}
-      </ul>
+      {/if}
     </section>
   </div>
 </main>
