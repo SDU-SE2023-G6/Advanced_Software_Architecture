@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>dk.sdu.se23g6.arch</groupId>
-	<artifactId>projecttitle</artifactId>
+	<artifactId>supervisor</artifactId>
 	<version>1.0.0</version>
-	<name>projecttitle</name>
+	<name>supervisor</name>
 	<properties>
 		<java.version>17</java.version>
 		<spring.version>3.1.4</spring.version>
@@ -54,11 +54,11 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- ODM & Mapping -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-data-mongodb</artifactId>-->
+<!--			<version>${spring.version}</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -90,7 +90,6 @@
 			<optional>true</optional>
 			<version>${spring.version}</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -106,12 +105,6 @@
 				<configuration>
 					<source>17</source>
 					<target>17</target>
-					<exclusions>
-						<exclusion>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclusion>
-					</exclusions>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
