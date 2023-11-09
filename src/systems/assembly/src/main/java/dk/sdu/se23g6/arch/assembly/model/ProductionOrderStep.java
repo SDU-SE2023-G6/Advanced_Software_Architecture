@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductionOrder {
+public class ProductionOrderStep {
     private String orderId;
-    private List<ProductionOrderStep> steps;
+    private String stepId; // maps to file name of production program of a production machine in S3
+    private StepStatus stepStatus;
 }

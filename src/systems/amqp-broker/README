@@ -1,0 +1,6 @@
+# Template for creating a amqp and mqtt broker using rabbitmq.
+
+TODO: 
+- [x] Enable MQTT
+- [x] Enable AMQP
+- [ ] Finish adding users on init (Currently uses anonymous authentication)

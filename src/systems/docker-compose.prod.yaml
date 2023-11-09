@@ -1,6 +1,42 @@
 version: "3.7"
 
 services:
+  supervisor_backend:
+    image: supervisor_backend:prod
+    container_name: supervisor_backend 
+    networks:
+      - system
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - rabbitmq
+      - mongodb_container
+    environment:
+      - SPRING_MONGODB_DATABASE=proddb
+      - SPRING_MONGODB_HOST=mongodb_container
+      - SPRING_MONGODB_USERNAME=root
+      - SPRING_MONGODB_PASSWORD=example
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=admin
+      - RABBITMQ_PASSWORD=123
+  assembly_backend:
+    image: assembly_system:prod
+    container_name: assembly_system
+    networks:
+      - system
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=admin
+      - RABBITMQ_PASSWORD=123
+
   mongodb_container:
     image: mongo:6
     container_name: mongodb_container
@@ -39,4 +75,3 @@ volumes:
 
 networks:
   system:
-    external: true

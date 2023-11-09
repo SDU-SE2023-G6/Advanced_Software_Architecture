@@ -51,9 +51,9 @@ public class ExampleController {
         return "OK";
     }
 
-    @GetMapping("/orders")
-    public List<Order> getOrders() {
-        List<Order> orders = ordersRepository.findAll();
+    public List<AssemblyOrder> completed() {
+        List<AssemblyOrder> orders = assemblyOrderRepository.findAll();
+        assemblyOrderRepository.deleteAll();
         return orders;
     }
 

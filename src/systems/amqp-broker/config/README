@@ -1,0 +1,1 @@
+This is a folder for config files. The goal was to get conf.d to work but it doesn't right now. The goal would be to use it instead of the rabbitmq.conf file.

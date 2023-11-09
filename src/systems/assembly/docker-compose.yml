@@ -2,12 +2,15 @@ version: '3.7'
 services:
   assembly_backend:
     image: assembly_system:prod
-    container_name: assembly_system
+    # container_name: assembly_system
+    deploy:
+      mode: replicated
+      replicas: 3
     networks:
       - system
     restart: always
     ports:
-      - "8081:8081"
+      - "8081-8083:8081"
     environment:
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672

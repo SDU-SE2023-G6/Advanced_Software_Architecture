@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>dk.sdu.se23g6.arch</groupId>
-    <artifactId>projecttitle</artifactId>
+    <artifactId>assembly</artifactId>
     <version>1.0.0</version>
-    <name>projecttitle</name>
+    <name>assembly</name>
     <properties>
         <java.version>17</java.version>
         <spring.version>3.1.4</spring.version>
@@ -67,6 +67,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
             <version>2.2.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.13.0</version>
         </dependency>
     </dependencies>
 
