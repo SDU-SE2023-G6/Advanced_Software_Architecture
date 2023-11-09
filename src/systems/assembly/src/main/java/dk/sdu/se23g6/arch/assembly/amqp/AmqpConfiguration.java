@@ -18,6 +18,14 @@ import java.util.Map;
 public class AmqpConfiguration {
 
     @Bean
+    public RabbitTemplate rabbitTemplate(ConnectionFactory factory) {
+        RabbitTemplate template = new RabbitTemplate();
+        template.setMessageConverter(jsonMessageConverter());
+        template.setConnectionFactory(factory);
+        return template;
+    }
+
+    @Bean
     public Jackson2JsonMessageConverter jsonMessageConverter() {
         Jackson2JsonMessageConverter jsonConverter = new Jackson2JsonMessageConverter();
         jsonConverter.setClassMapper(classMapper());

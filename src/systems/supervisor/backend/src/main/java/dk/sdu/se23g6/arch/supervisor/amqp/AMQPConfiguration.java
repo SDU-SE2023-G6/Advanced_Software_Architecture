@@ -17,34 +17,12 @@ import java.util.Map;
 @Configuration
 public class AMQPConfiguration {
 
-    public static final String PRODUCTION_ORDER_QUEUE = "productionOrders";
-
-    public static String getProductionOrderQueueName() {
-        return PRODUCTION_ORDER_QUEUE;
-    }
-
-    /**
-     * Create production order queue.
-     * Supervisor produces production orders to the queue.
-     * Assembly consumes production orders from the queue.
-     * @return production order queue
-     */
     @Bean
-    public Queue productionOrderQueue() {
-        return new Queue(PRODUCTION_ORDER_QUEUE, true);
-    }
-
-    /**
-     * Creates a default ASYNC template for RabbitMQ.
-     * @param factory Injected factory
-     * @return RabbitMQ template
-     */
-    @Bean
-    public AsyncRabbitTemplate asyncRabbitTemplate(ConnectionFactory factory) {
+    public RabbitTemplate rabbitTemplate(ConnectionFactory factory) {
         RabbitTemplate template = new RabbitTemplate();
         template.setMessageConverter(jsonMessageConverter());
         template.setConnectionFactory(factory);
-        return new AsyncRabbitTemplate(template);
+        return template;
     }
 
     @Bean
