@@ -1,0 +1,5 @@
+# Send 100 message per second to AMQP
+curl -X POST localhost:8081/sensor-data/start -d "messagesPerSecond=100"
+
+# Stop the sending of messages
+curl -X GET localhost:8081/sensor-data/stop

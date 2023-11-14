@@ -20,7 +20,7 @@ public class SensorDataSenderRunnable implements Runnable {
     public void run() {
         StopWatch stopWatch = StopWatch.createStarted();
         IntStream.range(0, amountOfMessages).boxed().forEach(i -> {
-            SensorData data = new SensorData("sensor-" + i, Math.random());
+            SensorData data = new SensorData("sensor-" + i);
             asyncSensorDataSender.sendSensorData(data);
         });
         stopWatch.stop();

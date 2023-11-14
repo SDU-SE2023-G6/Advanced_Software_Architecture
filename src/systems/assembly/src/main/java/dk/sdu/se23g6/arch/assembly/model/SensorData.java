@@ -12,15 +12,14 @@ import java.time.Instant;
 public class SensorData {
 
     private String sensorId;
-    private Double value;
-    private long assemblyTimestamp;
-    private long supervisorTimestamp;
+    private long assemblyTimestampEpochMillis;
+    private long supervisorTimestampEpochMillis;
+    private String assemblyTimestampAndSupervisorTimestamp;
     private Instant influxDBTimestamp;
 
-    public SensorData(String sensorId, Double value) {
+    public SensorData(String sensorId) {
         this.sensorId = sensorId;
-        this.value = value;
-        this.assemblyTimestamp = Instant.now().toEpochMilli();
+        this.assemblyTimestampEpochMillis = Instant.now().toEpochMilli();
     }
 
 }

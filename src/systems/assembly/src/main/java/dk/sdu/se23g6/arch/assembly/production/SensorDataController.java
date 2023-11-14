@@ -16,8 +16,8 @@ public class SensorDataController {
 
     @PostMapping("/start")
     @ResponseBody
-    public String startSendingSensorData(@RequestParam Integer amountOfMessages) {
-        sensorDataSender.startSendingSensorData(amountOfMessages);
+    public String startSendingSensorData(@RequestParam Integer messagesPerSecond) {
+        sensorDataSender.startSendingSensorData(messagesPerSecond);
         return "200 OK - Sending started.";
     }
 
