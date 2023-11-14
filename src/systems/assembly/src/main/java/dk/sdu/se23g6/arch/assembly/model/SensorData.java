@@ -13,12 +13,14 @@ public class SensorData {
 
     private String sensorId;
     private Double value;
-    private Instant timestamp;
+    private long assemblyTimestamp;
+    private long supervisorTimestamp;
+    private Instant influxDBTimestamp;
 
     public SensorData(String sensorId, Double value) {
         this.sensorId = sensorId;
         this.value = value;
-        this.timestamp = Instant.now();
+        this.assemblyTimestamp = Instant.now().toEpochMilli();
     }
 
 }

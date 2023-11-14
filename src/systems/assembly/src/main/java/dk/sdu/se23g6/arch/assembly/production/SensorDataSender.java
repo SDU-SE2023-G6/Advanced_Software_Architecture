@@ -1,10 +1,13 @@
 package dk.sdu.se23g6.arch.assembly.production;
 
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -15,6 +18,8 @@ public class SensorDataSender {
     private static final Logger log = LoggerFactory.getLogger(SensorDataSender.class);
     private ScheduledExecutorService executorService;
     private final AsyncSensorDataSender asyncSensorDataSender;
+    private int amountOfMessages;
+    private Instant experimentStart;
 
     public SensorDataSender(
             @Autowired AsyncSensorDataSender asyncSender
@@ -25,42 +30,23 @@ public class SensorDataSender {
     }
 
     public void startSendingSensorData(int amountOfMessages) {
+        this.amountOfMessages = amountOfMessages;
         SensorDataSenderRunnable runnable = new SensorDataSenderRunnable(asyncSensorDataSender, amountOfMessages);
-        executorService.scheduleAtFixedRate(runnable, 0, 5, TimeUnit.SECONDS);
+        experimentStart = Instant.now();
+        executorService.scheduleAtFixedRate(runnable, 0, 1, TimeUnit.SECONDS);
     }
 
-    public void stopSendingSensorData() {
+    public String stopSendingSensorData() {
         executorService.shutdownNow();
         while (!executorService.isShutdown()) {
         }
+        Instant experimentEnd = Instant.now();
         log.info("Old ScheduledExecutorService successfully shutdown.");
         this.executorService = Executors.newScheduledThreadPool(1);
-        log.info("New ScheduledExecutorService created. Idle...");
+        long millis = Duration.between(experimentStart, experimentEnd).toMillis();
+        double seconds = millis / 1000d;
+        return "Duration: " + DurationFormatUtils.formatDurationHMS(millis)
+                + "\nExpected Entries: " + this.amountOfMessages * (seconds + 1) + "\n";
     }
-
-//    public void sendMessagesPerSecond(int amountOfMessages) {
-//        int messagesPerSecond = amountOfMessages;
-//        int totalMessages = 100000; // Adjust the total number of messages as needed
-//
-//        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-//
-//        // Calculate the delay between messages based on the desired messages per second
-//        long delay = Math.round(1000.0 / messagesPerSecond);
-//
-//        Runnable sendMessageTask = () -> {
-//            asyncSender.sendSensorData();
-//
-//            // Reduce the totalMessages count
-//            totalMessages--;
-//
-//            // If all messages are sent, shutdown the scheduler
-//            if (totalMessages <= 0) {
-//                scheduler.shutdown();
-//            }
-//        };
-//
-//        // Schedule the sendMessageTask with a fixed delay
-//        scheduler.scheduleAtFixedRate(sendMessageTask, 0, delay, TimeUnit.MILLISECONDS);
-//    }
 
 }
