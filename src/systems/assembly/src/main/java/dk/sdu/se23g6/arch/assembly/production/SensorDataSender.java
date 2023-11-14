@@ -16,10 +16,13 @@ import java.util.concurrent.TimeUnit;
 public class SensorDataSender {
 
     private static final Logger log = LoggerFactory.getLogger(SensorDataSender.class);
+    private static final long SEND_MESSAGE_EVERY_X_SECOND = 1;
+
     private ScheduledExecutorService executorService;
     private final AsyncSensorDataSender asyncSensorDataSender;
-    private int amountOfMessages;
+    private int messagesPerSecond;
     private Instant experimentStart;
+    private Instant experimentEnd;
 
     public SensorDataSender(
             @Autowired AsyncSensorDataSender asyncSender
@@ -29,24 +32,34 @@ public class SensorDataSender {
         log.info(this.getClass().getSimpleName() + " initialized.");
     }
 
-    public void startSendingSensorData(int amountOfMessages) {
-        this.amountOfMessages = amountOfMessages;
-        SensorDataSenderRunnable runnable = new SensorDataSenderRunnable(asyncSensorDataSender, amountOfMessages);
+    public void startSendingSensorData(int messagesPerSecond) {
+        this.messagesPerSecond = messagesPerSecond;
+        SensorDataSenderRunnable runnable = new SensorDataSenderRunnable(asyncSensorDataSender, messagesPerSecond);
         experimentStart = Instant.now();
-        executorService.scheduleAtFixedRate(runnable, 0, 1, TimeUnit.SECONDS);
+        executorService.scheduleAtFixedRate(
+                runnable,
+                0,
+                SEND_MESSAGE_EVERY_X_SECOND,
+                TimeUnit.SECONDS
+        );
     }
 
     public String stopSendingSensorData() {
         executorService.shutdownNow();
         while (!executorService.isShutdown()) {
         }
-        Instant experimentEnd = Instant.now();
+        experimentEnd = Instant.now();
         log.info("Old ScheduledExecutorService successfully shutdown.");
         this.executorService = Executors.newScheduledThreadPool(1);
+        log.info("New ScheduledExecutorService successfully created");
+        return calculateExpectedMessages();
+    }
+
+    private String calculateExpectedMessages() {
         long millis = Duration.between(experimentStart, experimentEnd).toMillis();
         double seconds = millis / 1000d;
         return "Duration: " + DurationFormatUtils.formatDurationHMS(millis)
-                + "\nExpected Entries: " + this.amountOfMessages * (seconds + 1) + "\n";
+                + "\nExpected Entries: " + this.messagesPerSecond * (seconds + 1) + "\n";
     }
 
 }
