@@ -11,7 +11,7 @@ import java.time.Instant;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Measurement(name = "sensorData")
+@Measurement(name = "sensor-data")
 public class SensorData {
 
     @Column(tag = true)
@@ -20,7 +20,13 @@ public class SensorData {
     @Column
     private Double value;
 
+    @Column
+    private long assemblyTimestamp;
+
+    @Column
+    private long supervisorTimestamp;
+
     @Column(timestamp = true)
-    private Instant timestamp;
+    private Instant influxDBTimestamp;
 
 }
