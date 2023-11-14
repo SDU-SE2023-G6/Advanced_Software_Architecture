@@ -1,0 +1,2 @@
+# Reset InfluxDB bucket 'sensor-data'
+curl -X GET localhost:8080/sensor-data/reset-bucket

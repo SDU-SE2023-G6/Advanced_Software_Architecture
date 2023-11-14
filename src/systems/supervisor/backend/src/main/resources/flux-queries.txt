@@ -1,0 +1,10 @@
+// Count messages of last 5 minutes
+from(bucket: "sensor-data")
+  |> range(start:-5m)
+  |> group()
+  |> count()
+
+// Get last message from the messages of the last 5 minutes
+from(bucket: "sensor-data")
+  |> range(start:-5m)
+  |> last()

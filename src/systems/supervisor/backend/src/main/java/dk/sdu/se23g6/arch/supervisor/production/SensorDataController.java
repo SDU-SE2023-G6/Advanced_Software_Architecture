@@ -16,10 +16,11 @@ public class SensorDataController {
         this.sensorDataProcessor = sensorDataProcessor;
     }
 
-    @GetMapping("/amount")
+    @GetMapping("/reset-bucket")
     @ResponseBody
-    public int getAmountOfSensorDataMessages() {
-        return sensorDataProcessor.getSensorDataCount();
+    public String resetInfluxBucket() {
+        sensorDataProcessor.resetInfluxBucket();
+        return "Bucket reset (deleted and recreated).";
     }
 
 }
