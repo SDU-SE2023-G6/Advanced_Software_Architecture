@@ -14,19 +14,24 @@ import java.time.Instant;
 @Measurement(name = "sensor-data")
 public class SensorData {
 
-    @Column(tag = true)
+    @Column(name = "sensorId", tag = true)
     private String sensorId;
 
-    @Column
-    private Double value;
+    private long assemblyTimestampEpochMillis;
 
-    @Column
-    private long assemblyTimestamp;
+    private long supervisorTimestampEpochMillis;
 
-    @Column
-    private long supervisorTimestamp;
+    @Column(name = "assemblyAndSupervisorTimestamp")
+    private String assemblyTimestampAndSupervisorTimestamp;
 
-    @Column(timestamp = true)
+    @Column(name = "influxTimestamp", timestamp = true)
     private Instant influxDBTimestamp;
+
+    // Because InfluxDB stores only one value per row,
+    // we use a hack and use a string format to store
+    // multiple values in the same column.
+    public void setAssemblyAndSupervisorTimestamp() {
+        assemblyTimestampAndSupervisorTimestamp = assemblyTimestampEpochMillis + " | " + supervisorTimestampEpochMillis;
+    }
 
 }
