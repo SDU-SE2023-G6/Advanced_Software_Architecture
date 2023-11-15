@@ -24,7 +24,7 @@ public class SensorDataController {
     @GetMapping("/stop")
     @ResponseBody
     public String stopSendingSensorData() {
-        return sensorDataSender.stopSendingSensorData();
+        return "200 OK - Sending stopped.\n" + sensorDataSender.stopSendingSensorData();
     }
 
 }

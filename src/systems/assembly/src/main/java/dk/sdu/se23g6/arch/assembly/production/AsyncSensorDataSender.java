@@ -22,6 +22,9 @@ public class AsyncSensorDataSender {
 
     public AsyncSensorDataSender(@Autowired RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
+        // We need to send some data to the AMQP queue in order to let Spring Boot create it automatically
+        // This SensorData data point won't be considered in the experiment.
+        this.rabbitTemplate.convertAndSend(SENSOR_DATA_QUEUE, new SensorData("INIT"));
     }
 
     @Async

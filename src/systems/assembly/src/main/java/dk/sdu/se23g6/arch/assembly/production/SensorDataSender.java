@@ -57,7 +57,7 @@ public class SensorDataSender {
 
     private String calculateExpectedMessages() {
         long millis = Duration.between(experimentStart, experimentEnd).toMillis();
-        double seconds = millis / 1000d;
+        long seconds = millis / 1000;
         return "Duration: " + DurationFormatUtils.formatDurationHMS(millis)
                 + "\nExpected Entries: " + this.messagesPerSecond * (seconds + 1) + "\n";
     }

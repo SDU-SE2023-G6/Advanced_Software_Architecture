@@ -3,20 +3,17 @@ version: "3.7"
 services:
   supervisor_backend:
     image: supervisor_backend:prod
-    container_name: supervisor_backend 
+    container_name: supervisor_backend
     networks:
       - system
     restart: always
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
-      - rabbitmq
-      - mongodb_container
+      rabbitmq:
+        condition: service_healthy
     environment:
-      - SPRING_MONGODB_DATABASE=proddb
-      - SPRING_MONGODB_HOST=mongodb_container
-      - SPRING_MONGODB_USERNAME=root
-      - SPRING_MONGODB_PASSWORD=example
+      - INFLUXDB_HOST=influxdb
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
       - RABBITMQ_USERNAME=admin
@@ -30,27 +27,13 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
     environment:
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
       - RABBITMQ_USERNAME=admin
       - RABBITMQ_PASSWORD=123
-
-  mongodb_container:
-    image: mongo:6
-    container_name: mongodb_container
-    networks:
-      - system
-    restart: always
-    environment:
-      MONGO_INITDB_DATABASE: proddb
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-    ports:
-      - 27017:27017
-    volumes:
-      - mongodb_data_container:/data/db
   rabbitmq:
     image: rabbitmq:management-alpine
     networks:
@@ -58,20 +41,37 @@ services:
     container_name: rabbitmq
     restart: unless-stopped
     ports:
-      - "1883:1883" # MQTT port
-      - "5672:5672"
-      - "15672:15672" # WebUI port
-      - "1885:15675" # WS Mqtt port
+      - "5672:5672" # AMQP port
+      - "15672:15672" # RabbitMQ UI port
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 5s
+      timeout: 5s
+      retries: 3
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=123
     volumes:
       - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
       - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
-      # - ./config/conf.d/*:/etc/rabbitmq/conf.d/:ro
-
-volumes:
-  mongodb_data_container:
+  influxdb:
+    image: influxdb:2.7-alpine
+    networks:
+      - system
+    container_name: influxdb
+    restart: always
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password
+      - DOCKER_INFLUXDB_INIT_ORG=group-6
+      - DOCKER_INFLUXDB_INIT_BUCKET=sensor-data
+      - DOCKER_INFLUXDB_INIT_RETENTION=4w
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=random-token-value-123-456-789
+    ports:
+      - '8086:8086'
+    volumes:
+      - ./data/:/var/lib/influxdb
 
 networks:
   system:
