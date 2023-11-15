@@ -6,7 +6,7 @@ services:
       resources:
         limits:
           cpus: '3'
-          memory: 4000M
+          memory: 3000M
     image: supervisor_backend:prod
     container_name: supervisor_backend
     networks:
@@ -27,11 +27,11 @@ services:
       - RABBITMQ_PASSWORD=123
 
   assembly_backend:
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: '0.33'
-#          memory: 500M
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1000M
     image: assembly_system:prod
     container_name: assembly_system
     networks:
@@ -56,11 +56,11 @@ services:
       - RABBITMQ_PASSWORD=123
 
   rabbitmq:
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: '0.33'
-#          memory: 750M
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1000M
     image: rabbitmq:management-alpine
     networks:
       - system
@@ -71,9 +71,10 @@ services:
       - "15672:15672" # RabbitMQ UI port
     healthcheck:
       test: rabbitmq-diagnostics -q ping
-      interval: 5s
+      interval: 10s
       timeout: 5s
       retries: 3
+      start_period: 30s
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=123
@@ -85,8 +86,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.33'
-          memory: 750M
+          cpus: '1'
+          memory: 1000M
     image: influxdb:2.7-alpine
     networks:
       - system

@@ -12,7 +12,7 @@ print(f'Invoking Assembly system to send {messagesPerSecond} messages per second
 response = requests.post('http://localhost:8081/sensor-data/start', params = { 'messagesPerSecond': messagesPerSecond } , json = {})
 print(response.text)
 
-time.sleep(5)
+time.sleep(20)
 
 response = requests.get('http://localhost:8081/sensor-data/stop')
 print(response.text)
