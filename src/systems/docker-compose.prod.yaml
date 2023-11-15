@@ -2,6 +2,11 @@ version: "3.7"
 
 services:
   supervisor_backend:
+    deploy:
+      resources:
+        limits:
+          cpus: '3'
+          memory: 4000M
     image: supervisor_backend:prod
     container_name: supervisor_backend
     networks:
@@ -12,13 +17,21 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+      assembly_backend:
+        condition: service_healthy
     environment:
       - INFLUXDB_HOST=influxdb
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
       - RABBITMQ_USERNAME=admin
       - RABBITMQ_PASSWORD=123
+
   assembly_backend:
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '0.33'
+#          memory: 500M
     image: assembly_system:prod
     container_name: assembly_system
     networks:
@@ -29,12 +42,25 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+    healthcheck:
+      test: "wget --no-verbose -O /dev/stdout http://localhost:8081/actuator/health | grep UP || exit 1"
+      interval: 30s
+      timeout: 5s
+      retries: 1
+      start_period: 10s
+
     environment:
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
       - RABBITMQ_USERNAME=admin
       - RABBITMQ_PASSWORD=123
+
   rabbitmq:
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '0.33'
+#          memory: 750M
     image: rabbitmq:management-alpine
     networks:
       - system
@@ -54,7 +80,13 @@ services:
     volumes:
       - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
       - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+
   influxdb:
+    deploy:
+      resources:
+        limits:
+          cpus: '0.33'
+          memory: 750M
     image: influxdb:2.7-alpine
     networks:
       - system
