@@ -12,6 +12,7 @@ services:
     depends_on:
       - rabbitmq
       - mongodb_container
+      - influxdb
     environment:
       - SPRING_MONGODB_DATABASE=proddb
       - SPRING_MONGODB_HOST=mongodb_container
@@ -69,6 +70,23 @@ services:
       - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
       - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
       # - ./config/conf.d/*:/etc/rabbitmq/conf.d/:ro
+
+  influxdb:
+    image: influxdb:2.7-alpine
+    container_name: influxdb
+    restart: always
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password
+      - DOCKER_INFLUXDB_INIT_ORG=group-6
+      - DOCKER_INFLUXDB_INIT_BUCKET=sensor-data
+      - DOCKER_INFLUXDB_INIT_RETENTION=4w
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=random-token-value-123-456-789
+    ports:
+      - '8086:8086'
+    volumes:
+      - ./data/:/var/lib/influxdb
 
 volumes:
   mongodb_data_container:
