@@ -23,7 +23,7 @@ public class SensorDataController {
     @ResponseBody
     public String resetInfluxBucket() {
         sensorDataProcessor.resetInfluxBucket();
-        return "Bucket reset (deleted and recreated).";
+        return "200 OK - Bucket reset (deleted and recreated).";
     }
 
     @GetMapping("/csv")
