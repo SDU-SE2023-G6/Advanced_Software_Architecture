@@ -3,17 +3,19 @@ version: "3.7"
 services:
   supervisor_backend:
     deploy:
+      mode: replicated
+      replicas: 5
       resources:
         limits:
           cpus: '3'
           memory: 3000M
     image: supervisor_backend:prod
-    container_name: supervisor_backend
+#    container_name: supervisor_backend
     networks:
       - system
     restart: always
     ports:
-      - "8080:8080"
+      - "8080-8084:8080"
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -38,15 +40,15 @@ services:
       - system
     restart: always
     ports:
-      - "8081:8081"
+      - "8085:8085"
     depends_on:
       rabbitmq:
         condition: service_healthy
     healthcheck:
-      test: "wget --no-verbose -O /dev/stdout http://localhost:8081/actuator/health | grep UP || exit 1"
-      interval: 30s
+      test: "wget --no-verbose -O /dev/stdout http://localhost:8085/actuator/health | grep UP || exit 1"
+      interval: 20s
       timeout: 5s
-      retries: 1
+      retries: 3
       start_period: 10s
 
     environment:
