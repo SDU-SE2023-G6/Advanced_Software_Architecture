@@ -1,0 +1,263 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+\usepackage{multirow}
+\usepackage{rotating}
+
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{makecell}
+\usepackage{tcolorbox}
+\usepackage{amsthm}
+%\usepackage[english]{babel}
+\usepackage{pifont} % checkmarks
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}[section]
+
+
+\usepackage{listings}
+\lstset
+{ 
+    basicstyle=\footnotesize,
+    numbers=left,
+    stepnumber=1,
+    xleftmargin=5.0ex,
+}
+
+
+%SCJ
+\usepackage{subcaption}
+\usepackage{array, multirow}
+\usepackage{enumitem}
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+%\IEEEpubid{978-1-6654-8356-8/22/\$31.00 ©2022 IEEE}
+% @Sune:
+% Found this suggestion: https://site.ieee.org/compel2018/ieee-copyright-notice/
+% I have added it - you can see if it fulfills the requirements
+
+%\IEEEoverridecommandlockouts
+%\IEEEpubid{\makebox[\columnwidth]{978-1-6654-8356-8/22/\$31.00 ©2022 IEEE %\hfill} \hspace{\columnsep}\makebox[\columnwidth]{ }}
+                                 %978-1-6654-8356-8/22/$31.00 ©2022 IEEE
+% copyright notice added:
+%\makeatletter
+%\setlength{\footskip}{20pt} 
+%\def\ps@IEEEtitlepagestyle{%
+%  \def\@oddfoot{\mycopyrightnotice}%
+%  \def\@evenfoot{}%
+%}
+%\def\mycopyrightnotice{%
+%  {\footnotesize 978-1-6654-8356-8/22/\$31.00 ©2022 IEEE\hfill}% <--- Change here
+%  \gdef\mycopyrightnotice{}% just in case
+%}
+
+      
+\title{Group Report Template\\
+}
+
+\author{
+    \IEEEauthorblockN{
+        Henrik Schwarz\IEEEauthorrefmark{1},
+        Hampus Fink Gärdström\IEEEauthorrefmark{1},
+        Fahim Shahriar\IEEEauthorrefmark{1},
+        Tom Bourjala\IEEEauthorrefmark{1},
+        Tomás Soucek\IEEEauthorrefmark{1},
+        Henrik Prüß\IEEEauthorrefmark{1}
+    }
+    \IEEEauthorblockA{
+        University of Southern Denmark, SDU Software Engineering, Odense, Denmark \\
+        Email: \IEEEauthorrefmark{1} \textnormal{\{hschw17,hgard20,fasha23,tobou23,tosou23,hepru23\}}@mmmi.sdu.dk
+    }
+}
+
+
+%%%%
+
+%\author{\IEEEauthorblockN{1\textsuperscript{st} Blinded for review}
+%\IEEEauthorblockA{\textit{Blinded for review} \\
+%\textit{Blinded for review}\\
+%Blinded for review \\
+%Blinded for review}
+%\and
+%\IEEEauthorblockN{2\textsuperscript{nd} Blinded for review}
+%\IEEEauthorblockA{\textit{Blinded for review} \\
+%\textit{Blinded for review}\\
+%Blinded for review \\
+%Blinded for review}
+%\and
+%\IEEEauthorblockN{3\textsuperscript{nd} Blinded for review}
+%\IEEEauthorblockA{\textit{Blinded for review} \\
+%\textit{Blinded for review}\\
+%Blinded for review \\
+%Blinded for review}
+%}
+
+%%%%
+%\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
+%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+%\textit{name of organization (of Aff.)}\\
+%City, Country \\
+%email address or ORCID}
+
+
+
+\maketitle
+\IEEEpubidadjcol
+\begin{abstract}
+%%%%%%%%%%%%%%%%%% Max 970 signs without space %%%%%%%%%%%%%%%%%%
+% Intro
+
+% Gab
+    
+% Aim 
+
+% Method
+
+% Results 
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+Keyword1, Keyword2, Keyword3, Keyword4, Keyword5
+\end{IEEEkeywords}
+
+\section{Introduction and Motivation}
+%Introduction and motivate the problem
+
+
+
+
+
+
+The structure of the paper is as follows. 
+Section \ref{sec:problem} outlines the research question and the research approach. 
+%to analyze the research question and evaluate our results.
+Section \ref{sec:related_work} describes similar work in the field and how our contribution fits the field.
+Section \ref{sec:use_case} presents a production reconfiguration use case.
+The use case serves as input to specify a reconfigurability QA requirement in Section \ref{sec:qas}.
+Section \ref{sec:middleware_architecture} introduces the proposed reconfigurable middleware software architecture design.
+Section \ref{sec:evaluation} evaluates the proposed middleware on realistic equipment in the I4.0 lab and analyzes the results against the stated QA requirement.   
+
+\section{Problem and Approach}
+
+\label{sec:problem}
+\emph{Problem.}
+  
+
+\emph{Research questions:}
+\begin{enumerate}
+    \item  
+    \item 
+\end{enumerate}
+
+
+\emph{Approach.}
+The following steps are taken to answer this paper's research questions: 
+\begin{enumerate}
+    \item 
+\end{enumerate}
+
+
+
+\section{Related work}
+\label{sec:related_work}
+
+There is a considerable amount of literature on quality attributes in the research field of software architecture. Papers like \cite{barbacci_quality_1995}  and books like \cite{bass_software_2003} provide a general overview over quality attributes, and how they are used to evaluate a software system’s architecture. Becoming more specific, \cite{offutt_quality_2002} shows how quality attributes are used to evaluate web software applications, while \cite{obrien_quality_2007} focuses on the quality attributes of service-oriented architectures.
+
+In the context of Industry 4.0, there are a few examples of using quality attributes to evaluate software architectures. \cite{antonino_quality_2022} provides a quality model, based on the ISO/IEC 25010 standard \cite{noauthor_isoiec_2011}, to identify quality attributes in I4.0 software architectures. The proposed quality model is applied to two operational Industry 4.0 software architectures to ensure the appropriateness of the model.
+
+The paper \cite{thramboulidis_cyber-physical_2018} investigates the use of the microservice architecture in the I4.0 domain. Therefore, the authors conduct an experiment on a production system, transforming physical production machines into cyber-physical microservices that communicate over a network. Due to the microservice architecture, production machines can be added and removed, as required by the production schedule. Hence, the authors find that the use of microservices increases the flexibility of the production system, thereby addressing the quality attribute of Deployability. \cite{thramboulidis_cpus-iot_2019} provides a framework for integrating microservices into I4.0 production processes.
+
+Another paper \cite{jepsen_industry_2021} analyzes the requirements of middleware used for connecting different production machines in I4.0 software architectures. The analysis is conducted based on the Level of Conceptual Interoperability Model (LCIM), and concludes that middleware of I4.0 applications needs to consider the different levels of interoperability to ensure successful coordination and communication between the different production machines, thus addressing the quality attribute of Interoperability.
+
+In \cite{jepsen_reconfigurable_2023}, a software architecture addressing the quality attribute of reconfigurability in the domain of Industry 4.0 is presented. The proposed architecture is based on an event-driven architecture, and utilizes an orchestrator, a central message bus and several services to enable coordination and communication of the production machines. Furthermore, the paper describes a reconfigurable quality attribute scenario to verify the usefulness of the proposed architecture.
+
+A systematic mapping of the field of I4.0 architecture \cite{hofer_architecture_2018} shows that some fields in I4.0 architecture like integration and information management gain the researchers' attraction, while other fields like reconfiguration or verification and validation are under-investigated. As concluded in \cite{pivoto_cyber-physical_2021}, more research is needed to discover the potentials of recent trends like cloud computing or big data processing for I4.0 architectures, e.g. for handling the vast amount of data being produced by sensors and other IoT devices that are involved in the Industry 4.0. Such research would address the quality attributes of performance, scalability and availability.
+
+The contribution of this particular paper is to investigate the performance quality attribute, expressed in the delivery time of messages between different I4.0 software systems.
+
+\newpage
+\section{Use Case and Quality Attribute Scenario}
+\label{sec:use_case_and_qas}
+This Section introduces the use case and the specified x QASes.
+The QASes are developed based on the use case.
+
+\subsection{Use case}
+\label{sec:use_case}
+
+
+
+
+
+\subsection{Quality attribute scenarios}
+\label{sec:qas}
+
+
+
+
+
+
+
+
+
+
+\section{The solution}
+\label{sec:middleware_architecture}
+
+% Description of the overall architecture designs
+% Argue for tactics used to archieve the QASes
+% Discuss the trade-offs
+
+This section will describe a proposed design of that aims to achieve the stated QASes stated in the previous section.
+
+
+ 
+
+
+
+\section{Evaluation}
+\label{sec:evaluation}
+This Section describes the evaluation of the proposed design.
+Section \ref{sec:design} introduces the design of the experiment to evaluate the system. 
+Section \ref{sec:measurements} identifies the measurements in the system for the experiment.
+Section \ref{sec:pilot_test} describes the pilot test used to compute the number of replication in the actual evaluation. 
+Section \ref{sec:analysis} presents the analysis of the results from the experiment. 
+
+ 
+\subsection{Experiment design}
+\label{sec:design}
+
+
+\subsection{Measurements}
+\label{sec:measurements}
+
+
+\subsection{Pilot test}
+\label{sec:pilot_test}
+
+\subsection{Analysis}
+\label{sec:analysis}
+
+
+\section{Future work}
+
+
+\section{Conclusion}
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\vspace{12pt}
+\end{document}
