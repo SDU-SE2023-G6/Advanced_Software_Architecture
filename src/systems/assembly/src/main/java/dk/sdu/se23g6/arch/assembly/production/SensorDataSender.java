@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class SensorDataSender {
 
     private static final Logger log = LoggerFactory.getLogger(SensorDataSender.class);
+    private static final long SEND_MESSAGE_INITIAL_DELAY = 1;
     private static final long SEND_MESSAGE_EVERY_X_SECOND = 1;
 
     private ScheduledExecutorService executorService;
@@ -38,14 +39,14 @@ public class SensorDataSender {
         experimentStart = Instant.now();
         executorService.scheduleAtFixedRate(
                 runnable,
-                0,
+                SEND_MESSAGE_INITIAL_DELAY,
                 SEND_MESSAGE_EVERY_X_SECOND,
                 TimeUnit.SECONDS
         );
     }
 
     public String stopSendingSensorData() {
-        executorService.shutdownNow();
+        executorService.shutdown();
         while (!executorService.isShutdown()) {
         }
         experimentEnd = Instant.now();
@@ -59,7 +60,7 @@ public class SensorDataSender {
         long millis = Duration.between(experimentStart, experimentEnd).toMillis();
         long seconds = millis / 1000;
         return "Duration: " + DurationFormatUtils.formatDurationHMS(millis)
-                + "\nExpected Entries: " + this.messagesPerSecond * (seconds + 1) + "\n";
+                + "\nExpected Entries: " + this.messagesPerSecond * (seconds) + "\n";
     }
 
 }
