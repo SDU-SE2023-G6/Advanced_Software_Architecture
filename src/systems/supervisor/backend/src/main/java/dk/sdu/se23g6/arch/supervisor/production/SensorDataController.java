@@ -33,6 +33,13 @@ public class SensorDataController {
         return parseCSV(csvEntries);
     }
 
+    @GetMapping("/message-count")
+    @ResponseBody
+    public Integer getMessageCount() {
+        List<SensorData> entries = sensorDataProcessor.getSensorDataFromInflux();
+        return entries.size();
+    }
+
     private String parseCSV(List<SensorData> csvEntries) {
         StringBuilder sb = new StringBuilder();
         sb.append("sensorId,assemblyEpochMillis,supervisorEpochMillis,influxEpochMillis\n");
