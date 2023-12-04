@@ -3,7 +3,9 @@ package dk.sdu.se23g6.arch.assembly.production;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -16,8 +18,26 @@ import java.util.concurrent.TimeUnit;
 public class SensorDataSender {
 
     private static final Logger log = LoggerFactory.getLogger(SensorDataSender.class);
-    private static final long SEND_MESSAGE_INITIAL_DELAY = 1;
+    private static final long SEND_MESSAGE_INITIAL_DELAY = 0;
     private static final long SEND_MESSAGE_EVERY_X_SECOND = 1;
+    private static final String SENSOR_DATA_QUEUE_1 = "sensor-data-1";
+    private static final String SENSOR_DATA_QUEUE_2 = "sensor-data-2";
+    private static final String SENSOR_DATA_QUEUE_3 = "sensor-data-3";
+
+    @Bean
+    public Queue sensorDataQueue1() {
+        return new Queue(SENSOR_DATA_QUEUE_1, true);
+    }
+
+    @Bean
+    public Queue sensorDataQueue2() {
+        return new Queue(SENSOR_DATA_QUEUE_2, true);
+    }
+
+    @Bean
+    public Queue sensorDataQueue3() {
+        return new Queue(SENSOR_DATA_QUEUE_3, true);
+    }
 
     private ScheduledExecutorService executorService;
     private final AsyncSensorDataSender asyncSensorDataSender;

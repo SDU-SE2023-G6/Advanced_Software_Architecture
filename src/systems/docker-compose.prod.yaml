@@ -1,21 +1,18 @@
 version: "3.7"
 
 services:
-  supervisor_backend:
+  supervisor_backend_1:
     deploy:
-      mode: replicated
-      replicas: 3
       resources:
         limits:
-          cpus: '3'
-          memory: 3000M
+          cpus: '1'
+          memory: 1000M
     image: supervisor_backend:prod
-#    container_name: supervisor_backend
     networks:
       - system
     restart: always
     ports:
-      - "8080-8082:8080"
+      - "8080:8080"
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -27,6 +24,57 @@ services:
       - RABBITMQ_PORT=5672
       - RABBITMQ_USERNAME=admin
       - RABBITMQ_PASSWORD=12345
+      - ACTIVE_PROFILES=queue-1
+
+  supervisor_backend_2:
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1000M
+    image: supervisor_backend:prod
+    networks:
+      - system
+    restart: always
+    ports:
+      - "8081:8080"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      assembly_backend:
+        condition: service_healthy
+    environment:
+      - INFLUXDB_HOST=influxdb
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=admin
+      - RABBITMQ_PASSWORD=12345
+      - ACTIVE_PROFILES=queue-2
+
+#  supervisor_backend_3:
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '1'
+#          memory: 1000M
+#    image: supervisor_backend:prod
+#    networks:
+#      - system
+#    restart: always
+#    ports:
+#      - "8082:8080"
+#    depends_on:
+#      rabbitmq:
+#        condition: service_healthy
+#      assembly_backend:
+#        condition: service_healthy
+#    environment:
+#      - INFLUXDB_HOST=influxdb
+#      - RABBITMQ_HOST=rabbitmq
+#      - RABBITMQ_PORT=5672
+#      - RABBITMQ_USERNAME=admin
+#      - RABBITMQ_PASSWORD=12345
+#      - ACTIVE_PROFILES=queue-3
 
   assembly_backend:
     deploy:
@@ -50,7 +98,6 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
-
     environment:
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672

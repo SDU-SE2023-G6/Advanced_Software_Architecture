@@ -13,10 +13,10 @@ import java.util.List;
 @RequestMapping("/sensor-data")
 public class SensorDataController {
 
-    private final SensorDataProcessor sensorDataProcessor;
+    private final InfluxManager sensorDataProcessor;
 
-    public SensorDataController(@Autowired SensorDataProcessor sensorDataProcessor) {
-        this.sensorDataProcessor = sensorDataProcessor;
+    public SensorDataController(@Autowired InfluxManager influxManager) {
+        this.sensorDataProcessor = influxManager;
     }
 
     @GetMapping("/reset-bucket")
