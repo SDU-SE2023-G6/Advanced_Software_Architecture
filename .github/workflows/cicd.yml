@@ -34,27 +34,26 @@ jobs:
           name: repository-artifacts
           path: ./src/systems/
 
-  # Perform linting and/or other static code analysis
+  # Lint Code Base
   code-analysis:
     runs-on: ubuntu-latest
     needs: clone-repository
     permissions:
-      contents: read 
-    # Allow continuation of pipeline if linting fails
+      contents: read
+      packages: read
+      statuses: write
     continue-on-error: true
     steps:
-      - name: Download repository artifact
-        uses: actions/download-artifact@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
         with:
-          name: repository-artifacts
-          path: .
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y 
-          echo "install your-linting-dependencies"
-      - name: Run Linter / Other Code Analysis tool
-        run: echo "running linter"
+          fetch-depth: 0
+      - name: Lint Code Base
+        uses: super-linter/super-linter@v5
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
 #  # Job for compiling applicaitons and uploading as an artifact
 #  build-application:
@@ -66,7 +65,7 @@ jobs:
 #        with:
 #          name: repository-artifacts
 #          path: .
-#      # Your logic for building the applicaiton, language dependent
+#      # Your logic for building the application, language dependent
 #      - name: Build application
 #        run:  echo "build app"
 #      # Upload compiled artifact
@@ -75,7 +74,7 @@ jobs:
 #        with:
 #          name: build-artifact
 #          path: ./src # Replace with path to your compiled artifact
-#
+
 #  # Job for testing the application i.e
 #  test-application:
 #    runs-on: ubuntu-latest
