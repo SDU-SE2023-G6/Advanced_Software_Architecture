@@ -70,6 +70,7 @@ jobs:
         run: cd ./assembly/
       - name: Build Assembly
         run:  |
+          cd ./assembly/
           mvn compile
           mvn package
       - name: Upload Build Assembly System Artifact
@@ -97,6 +98,7 @@ jobs:
         run: cd ./supervisor/backend/
       - name: Build Supervisor
         run:  |
+          cd ./supervisor/backend/
           mvn compile
           mvn package
       - name: Upload Build Supervisor System Artifact
