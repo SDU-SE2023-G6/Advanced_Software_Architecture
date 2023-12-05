@@ -33,23 +33,16 @@ jobs:
           name: repository-artifact
           path: ./src/systems/
 
-#  # Lint application
-#  code-analysis:
-#    runs-on: ubuntu-latest
-#    needs: clone-repository
-#    permissions:
-#      contents: read
-#    continue-on-error: true
-#    steps:
-#      - name: Download Repository Artifact
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: repository-artifact
-#          path: .
-#      - name: Install dependencies
-#        run: echo "Installing linter dependencies..."
-#      - name: Run Linter
-#        run: echo "Running linter..."
+  # Lint application
+  code-analysis:
+    runs-on: ubuntu-latest
+    needs: clone-repository
+    permissions:
+      contents: read
+    continue-on-error: true
+    steps:
+      - name: Run Linter
+        run: echo "Running linter..."
   
   # Build Assembly Application
   build-assembly-application:
@@ -75,7 +68,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: assembly-build-artifact
-          path: ./assembly/target # Replace with path to your compiled artifact
+          path: ./assembly/target/ # Replace with path to your compiled artifact
 
   # Build Supervisor Application
   build-supervisor-application:
@@ -101,27 +94,20 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: supervisor-build-artifact
-          path: .supervisor/backend/target
+          path: .supervisor/backend/target/
 
-#  # Test application
-#  test-application:
-#    runs-on: ubuntu-latest
-#    needs: [build-application,code-analysis]
-#    # Allow pipeline to continue on error
-#    continue-on-error: true
-#    steps:
-#      # Download build artifact and use for application tests
-#      - name: Download build artifact
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: build-artifact
-#          path: ./build
-#      - name: Test application
-#        run: echo "Testing app..."
+  # Test application
+  test-application:
+    runs-on: ubuntu-latest
+    needs: [code-analysis,build-application]
+    continue-on-error: true
+    steps:
+      - name: Test application
+        run: echo "Testing app..."
 
   build-push-docker-image:
     runs-on: ubuntu-latest
-    needs: [clone-repository, build-assembly-application, build-supervisor-application]
+    needs: [clone-repository, build-assembly-application, build-supervisor-application, test-application]
     permissions:
       packages: write
       contents: read
