@@ -27,29 +27,31 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4.0.0
+      - name: List files
+        run: ls -a
       - name: Upload Repository Artifact
         uses: actions/upload-artifact@v3
         with:
           name: repository-artifact
           path: ./src/systems/
 
-  # Lint application
-  code-analysis:
-    runs-on: ubuntu-latest
-    needs: clone-repository
-    permissions:
-      contents: read
-    continue-on-error: true
-    steps:
-      - name: Download Repository Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: repository-artifact
-          path: .
-      - name: Install dependencies
-        run: echo "Installing linter dependencies..."
-      - name: Run Linter
-        run: echo "Running linter..."
+#  # Lint application
+#  code-analysis:
+#    runs-on: ubuntu-latest
+#    needs: clone-repository
+#    permissions:
+#      contents: read
+#    continue-on-error: true
+#    steps:
+#      - name: Download Repository Artifact
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: repository-artifact
+#          path: .
+#      - name: Install dependencies
+#        run: echo "Installing linter dependencies..."
+#      - name: Run Linter
+#        run: echo "Running linter..."
   
 #  # Build application
 #  build-application:
@@ -76,56 +78,56 @@ jobs:
 #          name: build-artifact
 #          path: ./src # Replace with path to your compiled artifact
 
-  # Test application
-  test-application:
-    runs-on: ubuntu-latest
-    needs: [code-analysis] # [build-application,code-analysis]
-    # Allow pipeline to continue on error
-    continue-on-error: true
-    steps:
-      # Download build artifact and use for application tests
+#  # Test application
+#  test-application:
+#    runs-on: ubuntu-latest
+#    needs: [build-application,code-analysis]
+#    # Allow pipeline to continue on error
+#    continue-on-error: true
+#    steps:
+#      # Download build artifact and use for application tests
 #      - name: Download build artifact
 #        uses: actions/download-artifact@v3
 #        with:
 #          name: build-artifact
 #          path: ./build
-      - name: Test application
-        run: echo "Testing app..."
+#      - name: Test application
+#        run: echo "Testing app..."
 
-  build-push-docker-image:
-    runs-on: ubuntu-latest
-    needs: [test-application]
-    permissions:
-      packages: write
-      contents: read
-    steps:
-      - name: Download Repository Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: repository-artifact
-          path: .
-      - name: Login to GitHub Package Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      # Transform github.actor to lowercase
-      - name: Transform username to lowercase
-        run: echo "OWNER_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-      # Building and pushing application image go to: GitHub -> Profile -> Packages
-      - name: Build & Push assembly system image
-        uses: docker/build-push-action@v3
-        with:
-          context: ./assembly/Dockerfile
-          push: true
-          tags: ghcr.io/${{ env.OWNER_LOWER }}/assembly-system:1.0-${{ github.sha }},ghcr.io/${{ env.OWNER_LOWER }}/assembly-system:latest
-      - name: Build & Push supervisor system image
-        uses: docker/build-push-action@v3
-        with:
-          context: ./supervisor/Dockerfile
-          push: true
-          tags: ghcr.io/${{ env.OWNER_LOWER }}/supervisor-system:1.0-${{ github.sha }},ghcr.io/${{ env.OWNER_LOWER }}/supervisor-system:latest
+#  build-push-docker-image:
+#    runs-on: ubuntu-latest
+#    needs: [clone-repository]
+#    permissions:
+#      packages: write
+#      contents: read
+#    steps:
+#      - name: Download Repository Artifact
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: repository-artifact
+#          path: .
+#      - name: Login to GitHub Package Registry
+#        uses: docker/login-action@v2
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN }}
+#      # Transform github.actor to lowercase
+#      - name: Transform username to lowercase
+#        run: echo "OWNER_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+#      # Building and pushing application image go to: GitHub -> Profile -> Packages
+#      - name: Build & Push assembly system image
+#        uses: docker/build-push-action@v3
+#        with:
+#          context: ./assembly/Dockerfile
+#          push: true
+#          tags: ghcr.io/${{ env.OWNER_LOWER }}/assembly-system:1.0-${{ github.sha }},ghcr.io/${{ env.OWNER_LOWER }}/assembly-system:latest
+#      - name: Build & Push supervisor system image
+#        uses: docker/build-push-action@v3
+#        with:
+#          context: ./supervisor/Dockerfile
+#          push: true
+#          tags: ghcr.io/${{ env.OWNER_LOWER }}/supervisor-system:1.0-${{ github.sha }},ghcr.io/${{ env.OWNER_LOWER }}/supervisor-system:latest
 #
 #  # Job for deploying the application, could be the logic for deploying to your VM
 #  deploy-application:
