@@ -66,8 +66,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Enter ./assembly Directory
-        run: cd ./assembly/
       - name: Build Assembly
         run:  |
           cd ./assembly/
@@ -77,7 +75,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: assembly-build-artifact
-          path: ./target # Replace with path to your compiled artifact
+          path: ./assembly/target # Replace with path to your compiled artifact
 
   # Build Supervisor Application
   build-supervisor-application:
@@ -94,8 +92,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Enter ./supervisor Directory
-        run: cd ./supervisor/backend/
       - name: Build Supervisor
         run:  |
           cd ./supervisor/backend/
@@ -105,7 +101,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: supervisor-build-artifact
-          path: ./target
+          path: .supervisor/backend/target
 
 #  # Test application
 #  test-application:
