@@ -51,30 +51,59 @@ jobs:
 #      - name: Run Linter
 #        run: echo "Running linter..."
   
-#  # Build application
-#  build-application:
-#    runs-on: ubuntu-latest
-#    needs: clone-repository
-#    steps:
-#      - name: Download Repository Artifact
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: repository-artifact
-#          path: .
-#      - name: Build Assembly
-#        run:  echo "Building assembly application..."
-#      - name: Build Supervisor
-#        run:  echo "Building supervisor application..."
-#      - name: Upload Build Assembly System Artifact
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: build-artifact
-#          path: ./src # Replace with path to your compiled artifact
-#      - name: Upload Build Supervisor System Artifact
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: build-artifact
-#          path: ./src # Replace with path to your compiled artifact
+  # Build Assembly Application
+  build-assembly-application:
+    runs-on: ubuntu-latest
+    needs: clone-repository
+    steps:
+      - name: Download Repository Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repository-artifact
+          path: .
+      - name: Setup Java and Maven
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Enter ./assembly Directory
+        run: cd ./assembly/
+      - name: Build Assembly
+        run:  |
+          mvn compile
+          mvn package
+      - name: Upload Build Assembly System Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: assembly-build-artifact
+          path: ./target # Replace with path to your compiled artifact
+
+  # Build Supervisor Application
+  build-supervisor-application:
+    runs-on: ubuntu-latest
+    needs: clone-repository
+    steps:
+      - name: Download Repository Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repository-artifact
+          path: .
+      - name: Setup Java and Maven
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Enter ./supervisor Directory
+        run: cd ./supervisor/backend/
+      - name: Build Supervisor
+        run:  |
+          mvn compile
+          mvn package
+      - name: Upload Build Supervisor System Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: supervisor-build-artifact
+          path: ./target
 
 #  # Test application
 #  test-application:
