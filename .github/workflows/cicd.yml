@@ -28,7 +28,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4.0.0
       - name: List files
-        run: ls -a
+        run: ls -a ./src/systems
       - name: Upload Repository Artifact
         uses: actions/upload-artifact@v3
         with:
