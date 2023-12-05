@@ -107,7 +107,7 @@ jobs:
           name: repository-artifact
           path: .
       - name: List files
-        run: ls -a
+        run: ls -a ./assembly/
       - name: Login to GitHub Package Registry
         uses: docker/login-action@v2
         with:
@@ -121,13 +121,13 @@ jobs:
       - name: Build & Push assembly system image
         uses: docker/build-push-action@v3
         with:
-          context: ./assembly/Dockerfile
+          context: ./assembly/
           push: true
           tags: ghcr.io/${{ env.OWNER_LOWER }}/assembly-system:1.0-${{ github.sha }},ghcr.io/${{ env.OWNER_LOWER }}/assembly-system:latest
       - name: Build & Push supervisor system image
         uses: docker/build-push-action@v3
         with:
-          context: ./supervisor/Dockerfile
+          context: ./supervisor/
           push: true
           tags: ghcr.io/${{ env.OWNER_LOWER }}/supervisor-system:1.0-${{ github.sha }},ghcr.io/${{ env.OWNER_LOWER }}/supervisor-system:latest
 #
