@@ -9,8 +9,7 @@ services:
         limits:
           cpus: '3'
           memory: 3000M
-    image: supervisor_backend:prod
-#    container_name: supervisor_backend
+    image: ghcr.io/sdu-se2023-g6/supervisor-system:1.0-566ce453be346ce6aefd402cc78e5c2ed15dcd19 
     networks:
       - system
     restart: always
@@ -34,7 +33,7 @@ services:
         limits:
           cpus: '1'
           memory: 1000M
-    image: assembly_system:prod
+    image: ghcr.io/sdu-se2023-g6/assembly-system:1.0-566ce453be346ce6aefd402cc78e5c2ed15dcd19
     container_name: assembly_system
     networks:
       - system
@@ -66,7 +65,6 @@ services:
     image: rabbitmq:management-alpine
     networks:
       - system
-    container_name: rabbitmq
     restart: unless-stopped
     ports:
       - "5672:5672" # AMQP port
@@ -88,7 +86,6 @@ services:
     image: influxdb:2.7-alpine
     networks:
       - system
-    container_name: influxdb
     restart: always
     environment:
       - DOCKER_INFLUXDB_INIT_MODE=setup
@@ -104,16 +101,17 @@ services:
       - ./data/:/var/lib/influxdb
     
     # Watchtower 
-    watchtower:
-      image: containrrr/watchtower
-      volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
-      command: --debug --http-api-update
-      ports:
-        - 8080:8080
-      environment:
-        - WATCHTOWER_HTTP_API_TOKEN=123
-      labels:
-        - "com.centurylinklabs.watchtower.enable=false"
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --debug --http-api-update
+    ports:
+      - 8090:8080 # change the port since it is already used
+    environment:
+      - WATCHTOWER_HTTP_API_TOKEN=123
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
 networks:
   system:
+
