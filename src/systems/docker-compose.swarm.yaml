@@ -9,7 +9,7 @@ services:
         limits:
           cpus: '3'
           memory: 3000M
-    image: ghcr.io/sdu-se2023-g6/supervisor-system:1.0-566ce453be346ce6aefd402cc78e5c2ed15dcd19 
+    image: ghcr.io/sdu-se2023-g6/supervisor-system:latest
     networks:
       - system
     restart: always
@@ -33,7 +33,7 @@ services:
         limits:
           cpus: '1'
           memory: 1000M
-    image: ghcr.io/sdu-se2023-g6/assembly-system:1.0-566ce453be346ce6aefd402cc78e5c2ed15dcd19
+    image: ghcr.io/sdu-se2023-g6/assembly-system:latest
     container_name: assembly_system
     networks:
       - system
@@ -121,5 +121,10 @@ services:
       placement:
         constraints:
           - node.role == manager
+    environment:
+      - ROLLBACK_ON_FAILURE="true"
+      - UPDATE_OPTIONS="--update-delay=30s"
+      - SLEEP_TIME="1m"
+      - IGNORELIST_SERVICES="influxdb,rabbitmq,shepherd"
 networks:
   system:
