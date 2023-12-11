@@ -13,10 +13,8 @@ on:
       - 'src/systems/assembly/'
 
 
-  env:
-    DOCKER_IMAGE_NAME: assembly-system
-    PROJECT_NAME: PedalPro
-    GROUP_NUMBER: Group06 #I.e  Group02
+env:
+  DOCKER_IMAGE_NAME: assembly-system
 
 jobs:
   build-push-docker-image:

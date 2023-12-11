@@ -13,8 +13,8 @@ on:
     paths:
       - 'src/systems/supervisor/backend/'
 
-  env:
-    DOCKER_IMAGE_NAME: supervisor-system
+env:
+  DOCKER_IMAGE_NAME: supervisor-system
 
 jobs:
   build-push-docker-image:
