@@ -1,0 +1,37 @@
+on:
+  push:
+    paths:
+      - "src/systems/assembly/"
+    branches:
+      - main
+      - master
+
+env:
+  DOCKER_IMAGE_NAME: assembly-system
+
+jobs:
+  build-push-docker-image:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Login to GitHub Package Registry
+        uses: docker/login-action@v2
+        with:
+          # Authenticate with GitHub Container Registry, could be changed to use DockerHub
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      # Transform github.actor to lowercase
+      - name: Transform username to lowercase
+        run: echo "OWNER_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+      # Building and pushing application image go to: GitHub -> Profile -> Packages
+      - name: Build & Push image
+        uses: docker/build-push-action@v3
+        with:
+          context: src/systems/assembly #Path to your dockerfile
+          push: true
+          tags: ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_NAME }}:1.0-${{ github.sha }},ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_NAME }}:latest
