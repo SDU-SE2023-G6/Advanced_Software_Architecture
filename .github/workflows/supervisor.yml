@@ -22,11 +22,6 @@ jobs:
       packages: write
       contents: read
     steps:
-      - name: Download repository artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: repository-artifacts
-          path: .
       - name: Login to GitHub Package Registry
         uses: docker/login-action@v2
         with:
