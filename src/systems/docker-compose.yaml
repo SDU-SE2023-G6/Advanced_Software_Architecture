@@ -4,17 +4,17 @@ services:
   supervisor_backend:
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       resources:
         limits:
           cpus: '3'
           memory: 3000M
-    image: ghcr.io/sdu-se2023-g6/supervisor-system:1.0-566ce453be346ce6aefd402cc78e5c2ed15dcd19 
+    image: ghcr.io/sdu-se2023-g6/supervisor-system:latest 
     networks:
       - system
     restart: always
     ports:
-      - "8080-8082:8080"
+      - "8080:8080"
     depends_on:
       - rabbitmq
       - assembly_backend
@@ -33,7 +33,7 @@ services:
         limits:
           cpus: '1'
           memory: 1000M
-    image: ghcr.io/sdu-se2023-g6/assembly-system:1.0-566ce453be346ce6aefd402cc78e5c2ed15dcd19
+    image: ghcr.io/sdu-se2023-g6/assembly-system:latest
     container_name: assembly_system
     networks:
       - system
@@ -103,6 +103,7 @@ services:
     # Watchtower 
   watchtower:
     image: containrrr/watchtower
+    restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --debug --http-api-update
@@ -114,4 +115,3 @@ services:
       - "com.centurylinklabs.watchtower.enable=false"
 networks:
   system:
-
