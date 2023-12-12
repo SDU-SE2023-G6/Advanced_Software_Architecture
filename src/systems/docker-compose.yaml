@@ -1,0 +1,117 @@
+version: "3.7"
+
+services:
+  supervisor_backend:
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '3'
+          memory: 3000M
+    image: ghcr.io/sdu-se2023-g6/supervisor-system:latest 
+    networks:
+      - system
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rabbitmq
+      - assembly_backend
+    environment:
+      - INFLUXDB_HOST=influxdb
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=admin
+      - RABBITMQ_PASSWORD=12345
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  assembly_backend:
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1000M
+    image: ghcr.io/sdu-se2023-g6/assembly-system:latest
+    container_name: assembly_system
+    networks:
+      - system
+    restart: always
+    ports:
+      - "8085:8085"
+    depends_on:
+      - rabbitmq
+    healthcheck:
+      test: "wget --no-verbose -O /dev/stdout http://localhost:8085/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=admin
+      - RABBITMQ_PASSWORD=12345
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  rabbitmq:
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2000M
+    image: rabbitmq:management-alpine
+    networks:
+      - system
+    restart: unless-stopped
+    ports:
+      - "5672:5672" # AMQP port
+      - "15672:15672" # RabbitMQ UI port
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=12345
+    volumes:
+      - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+
+  influxdb:
+    image: influxdb:2.7-alpine
+    networks:
+      - system
+    restart: always
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password
+      - DOCKER_INFLUXDB_INIT_ORG=group-6
+      - DOCKER_INFLUXDB_INIT_BUCKET=sensor-data
+      - DOCKER_INFLUXDB_INIT_RETENTION=4w
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=random-token-value-123-456-789
+    ports:
+      - '8086:8086'
+    volumes:
+      - ./data/:/var/lib/influxdb
+    
+    # Watchtower 
+  watchtower:
+    image: containrrr/watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --debug --http-api-update
+    ports:
+      - 8090:8080 # change the port since it is already used
+    environment:
+      - WATCHTOWER_HTTP_API_TOKEN=123
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+networks:
+  system:
