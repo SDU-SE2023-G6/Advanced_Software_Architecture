@@ -1,0 +1,210 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+\usepackage{multirow}
+\usepackage{rotating}
+
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{makecell}
+\usepackage{tcolorbox}
+\usepackage{amsthm}
+%\usepackage[english]{babel}
+\usepackage{pifont} % checkmarks
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}[section]
+
+
+\usepackage{listings}
+\lstset
+{ 
+    basicstyle=\footnotesize,
+    numbers=left,
+    stepnumber=1,
+    xleftmargin=5.0ex,
+}
+
+
+%SCJ
+\usepackage{subcaption}
+\usepackage{array, multirow}
+\usepackage{enumitem}
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+%\IEEEpubid{978-1-6654-8356-8/22/\$31.00 ©2022 IEEE}
+% @Sune:
+% Found this suggestion: https://site.ieee.org/compel2018/ieee-copyright-notice/
+% I have added it - you can see if it fulfills the requirements
+
+%\IEEEoverridecommandlockouts
+%\IEEEpubid{\makebox[\columnwidth]{978-1-6654-8356-8/22/\$31.00 ©2022 IEEE %\hfill} \hspace{\columnsep}\makebox[\columnwidth]{ }}
+                                 %978-1-6654-8356-8/22/$31.00 ©2022 IEEE
+% copyright notice added:
+%\makeatletter
+%\setlength{\footskip}{20pt} 
+%\def\ps@IEEEtitlepagestyle{%
+%  \def\@oddfoot{\mycopyrightnotice}%
+%  \def\@evenfoot{}%
+%}
+%\def\mycopyrightnotice{%
+%  {\footnotesize 978-1-6654-8356-8/22/\$31.00 ©2022 IEEE\hfill}% <--- Change here
+%  \gdef\mycopyrightnotice{}% just in case
+%}
+
+      
+\title{Reflection Report\\
+}
+
+\author{
+    \IEEEauthorblockN{
+        Henrik Schwarz\IEEEauthorrefmark{1},
+        Hampus Fink Gärdström\IEEEauthorrefmark{1},
+        Fahim Shahriar\IEEEauthorrefmark{1},
+        Tom Bourjala\IEEEauthorrefmark{1},
+        Tomas Soucek\IEEEauthorrefmark{1},
+        Henrik Prüß\IEEEauthorrefmark{1}
+    }
+    \IEEEauthorblockA{
+        University of Southern Denmark, SDU Software Engineering, Odense, Denmark \\
+        Email: \IEEEauthorrefmark{1} \textnormal{\{hschw17,hgard20,fasha23,tobou23,tosou23,hepru23\}}@student.sdu.dk
+    }
+}
+
+%%%%
+
+%\author{\IEEEauthorblockN{1\textsuperscript{st} Blinded for review}
+%\IEEEauthorblockA{\textit{Blinded for review} \\
+%\textit{Blinded for review}\\
+%Blinded for review \\
+%Blinded for review}
+%\and
+%\IEEEauthorblockN{2\textsuperscript{nd} Blinded for review}
+%\IEEEauthorblockA{\textit{Blinded for review} \\
+%\textit{Blinded for review}\\
+%Blinded for review \\
+%Blinded for review}
+%\and
+%\IEEEauthorblockN{3\textsuperscript{nd} Blinded for review}
+%\IEEEauthorblockA{\textit{Blinded for review} \\
+%\textit{Blinded for review}\\
+%Blinded for review \\
+%Blinded for review}
+%}
+
+%%%%
+%\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
+%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+%\textit{name of organization (of Aff.)}\\
+%City, Country \\
+%email address or ORCID}
+
+
+\maketitle
+\IEEEpubidadjcol
+
+
+\section{Contribution}
+This section details each members contributions, an overview can be seen in table \ref{tab:cb}.
+\subsection{Report}
+\begin{itemize}
+  \item \textit{Abstract} -- Written by Henrik Schwarz. Reviewed by Hampus F. Gärdström.
+  \item \textit{Introduction} -- Written by Hampus F. Gärdström. Reviewed by Tom Bourjala and Fahim Shahriar.
+  \item \textit{Problem and Approach} -- Written by Hampus F. Gärdström. Contributed and reviewed by Tom Bourjala.
+  \item \textit{Related Work} -- Written by Henrik Pruess. Reviewed by Hampus F. Gärdström.
+  \item \textit{Use Cases \& Quality Attribute Scenarios} -- Written by Tom Bourjala. Reviewed by Tomas Soucek.
+  \item \textit{The Solution} -- Mostly written by Tomas Soucek. Deployability quality attribute part written by Henrik Pruess. Reviewed by Henrik Schwarz.
+  \item \textit{Evaluation} -- Chapter introduction and subsection about experiment A written by Henrik Pruess. Subsection about experiment B written by Henrik Schwarz. Reviewed by Henrik Schwarz and Henrik Pruess.
+  \item \textit{Future Work} -- Written by Fahim Shahriar. Reviewed by Henrik Pruess and Tomas Soucek.
+  \item \textit{Conclusion} -- Written by Henrik Schwarz. Reviewed by Fahim Shahriar.
+\end{itemize}
+
+\subsection{Reflection report}
+\begin{itemize}
+    \item \textit{Discussion} -- Written by Tom Bourjala.
+    \item \textit{Reflection} -- Written by Tomas Soucek.
+    \item \textit{Conclusion} -- Written by Fahim Shahriar.
+\end{itemize}
+
+\begin{table}[]
+\centering
+\caption{Contributions}
+\begin{tabular}{|p{2cm}|p{2cm}|p{3cm}|}
+\hline
+\textbf{Work} & \textbf{Main Contributor} & \textbf{Contributors} \\ \hline
+ Abstract & Henrik Schwarz & Hampus F. Gärdström \\    \hline
+ Introduction & Hampus F. Gärdström, Tom Bourjala & Fahim Shahriar \\ \hline
+ Problem and Approach & Hampus F. Gärdström &  Tom Bourjala \\ \hline
+ Related Work & Henrik Pruess & Hampus F. Gärdström\\ \hline
+ Use cases \& Quality Attribute scenarios & Tom Bourjala  & Tomas Soucek \\ \hline
+ The solution & Tomas Soucek & Henrik Pruess \newline Henrik Schwarz\\ \hline
+ Evaluation & Henrik Pruess &  Henrik Schwarz \\ \hline
+ Future Work & Fahim Shahriar & Henrik Pruess \newline Tomas Soucek \\ \hline
+ Conclusion & Henrik Schwarz & Fahim Shahriar \\ \hline
+
+%(Context, systems and subsystems trees, review)
+
+\end{tabular}%
+\label{tab:cb}
+\end{table}
+
+\section{Discussion}
+The main design goals we addressed for our problem, a~production system for a~bike company, were stated as:
+\begin{itemize}
+    \item Scalability
+\end{itemize}
+
+\begin{itemize}
+    \item Deployability
+\end{itemize}
+
+\begin{itemize}
+    \item Performance
+\end{itemize}
+
+While designing the architecture and prototypes, each of those quality attributes was assessed and reflected upon.
+
+With regards to scalability and performance, our experiment included testing the improvement of the performance with additional instances of our production system. However, contrary to expectations from literature such as Koren et al. \cite{Koren1999Reconfigurable} and Bortolini et al. \cite{Bortolini2018Reconfigurable} illustrating reconfigurable manufacturing systems methodologies and tools, the results we obtained indicate that with our design, adding instances decreased the time to delivery.
+We expected the performances to increase with the addition of instances in order to validate the performance quality attribute, as well as a basis for assessing the potential of scalability for our system. 
+This decrease in performance may suggest that our current design is not optimal for scalability. The issue could also be with our experiment, as we may have not put the system under enough stress to display the benefits of our load-balancing pattern. We need a reevaluation of the scalability approach, considering insights from Sommer et al. \cite{Sommer2018Message} on middleware optimization.
+
+On the other hand, we demonstrated that our architecture enables a cycle of 48 seconds from commit to live, indicating successful achievement of deployability goals. Automated deployment using cloud tools effectively streamlined this process. 
+This is consistent with Bass et al. \cite{Bass2012Software}, and aligns with the trends towards automated deployment in Industry 4.0 as discussed by Antonino et al. \cite{Antonino2019Blueprints} and Eirinakis et al. \cite{Eirinakis2017Proposal}.
+Koren et al. \cite{Koren1999Reconfigurable} emphasize the necessity of RMS in adapting to frequent and unpredictable market changes, a cornerstone of Industry 4.0. Successfully implementing a system with a~short deployability delay enables our fictional company to adapt quickly to market changes and have a continuous development pipeline.   
+
+\section{Reflection}
+The stated problem, the architectural prototypes for a flexible production system for an assembly line, has been kept in mind during the whole process. Whenever we needed to select quality attributes, use cases, experiments, etc., we always thought about the fictional bike company, that we had created, and asked ourselves what are their needs and how they could benefit from our suggestions. Overall we think that the Industry 4.0 topic was in the beginning a little abstract, but good in terms of the need for multiple independent systems to make everything work. This also made us think about all the different systems, this company would need and we believe that it helped us realize we also need to think in the big picture, when it comes to architecture design.   
+
+When it comes to accessing our work process, a lot of steps could have been conducted better. In the beginning, filled with enthusiasm, we had high hopes and wanted to think about every detail. Even though it may sound optimistic, it has led us to very long discussions, that often shifted from the important tasks, and often led to overthinking our ideas. That way, even though, we tried to stick with the exercises to our best will, at some point, we just got behind. And we stayed behind for the rest of the semester. Even when we tried to prioritize this project over others, to catch up. Overall we needed to learn to work together, because we first met at the beginning of the semester and to be honest, it takes some amount of skill to manage a group of 6 people -- especially when 5 of them are from different countries, with different academic backgrounds. But we believe, that in the end, we managed to find a good balance and it has provided us with valuable life experiences.   
+
+Now about the overall high-level architecture. It was proposed in the beginning of the semester and was briefly mentioned in the report. In the end, we decided to stick with only the production part of our system. Meaning the systems, taking care of business intelligence and logistics were neglected. This decision has been good in a way, that more focus could be put in perfecting the production system. The other suggested parts of our architecture could be used in a subsequent study, even though these diagrams did not make it to the final report. Therefore, the solution, that has been proposed in the report, can be perceived as a pilot study. 
+
+One of the things we have not managed to finish was a quality control subsystem. Potentially a very interesting part, that could showcase interoperability, since we assumed that this subsystem would use multiple sensors, such as lasers, cameras, etc. On the other hand, implementing such a system would require advanced data processing, which was not the main concern of our study. During the design process, we also put a lot of emphasis on the on-demand production of the bikes. This requirement got lost along the process and it has never been returned to the main focus. Another thing, that got lost was a traceability quality attribute. We thought that users and workers could benefit from the ability of being able to track the whole process of bike creation. Even though, we still think, that both these ideas are good, in the end, we focused more on different quality attributes, that we thought were more essential to the system.
+
+The biggest technical issue, that we faced, was probably when we were developing the scalability experiment. In that experiment, we wanted to see how our system performs and how horizontal scaling influences the results. From the experiment, we found out, that our AMQP broker potentially behaves in a little different manner than we thought. We also found out that it is not that easy to scale the broker, which could lead to the broker being a bottleneck. %didn't really use influx the best
+
+
+\section{Conclusion}
+In conclusion, our journey in developing a flexible production system for an assembly line has been marked by a continuous commitment to addressing the stated problem. We navigated the complexities of Industry 4.0, transforming abstract concepts into tangible architectural prototypes that catered to the needs of our fictional bike company. Throughout the process, the collaborative effort of a diverse group underscored the challenges of managing discussions and prioritizing tasks.
+
+The decision to focus exclusively on the production aspect of the system proved beneficial, allowing us to delve deeper and refine our solutions. However, unfinished components, such as the quality control subsystem, and lost focus on on-demand production and traceability revealed the need for improved project management and adherence to initial objectives.
+
+Technical challenges, particularly in the scalability experiment, exposed unexpected nuances with the AMQP message broker, highlighting the importance of thorough testing and consideration of system dynamics.
+
+Despite the hurdles, our reflection underscores the significance of this project as a pilot study, laying the foundation for future exploration into the neglected aspects of business intelligence and logistics. This experience has not only deepened our understanding of architectural design but also honed our ability to work collaboratively in a diverse, international setting. As we conclude this endeavor, we carry forward valuable insights, recognizing the importance of striking a balance between meticulous detail and overarching project goals in future architectural endeavors.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\vspace{12pt}
+\end{document}
