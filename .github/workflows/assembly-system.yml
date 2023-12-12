@@ -42,7 +42,7 @@ jobs:
       - name: Deploy Stage
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "${ env.VM_URL }"
+          url: "${{ env.VM_URL }}"
           method: "POST"
           customHeaders: '{"Content-Type": "multipart/form-data"}'
-          data: "Authorization: Bearer ${ secrets.WATCHTOWER_TOKEN }"
+          data: "Authorization: Bearer ${{ secrets.WATCHTOWER_TOKEN }}"
