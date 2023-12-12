@@ -9,7 +9,8 @@ services:
         limits:
           cpus: '3'
           memory: 3000M
-    image: ghcr.io/sdu-se2023-g6/supervisor-system:latest 
+    build:
+      context: ./supervisor/backend/
     networks:
       - system
     restart: always
@@ -33,8 +34,8 @@ services:
         limits:
           cpus: '1'
           memory: 1000M
-    image: ghcr.io/sdu-se2023-g6/assembly-system:latest
-    container_name: assembly_system
+    build:
+      context: ./assembly/
     networks:
       - system
     restart: always
