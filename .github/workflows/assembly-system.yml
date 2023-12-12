@@ -8,6 +8,7 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: assembly-system
+  VM_URL: 34.41.238.212
 
 jobs:
   build-push-docker-image:
